@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Polideportivo Alejandro Carrasquel</title>
+<meta name="description" content="Reserva la cancha de usos múltiples, el campo de fútbol o la pista de atletismo del Polideportivo Alejandro Carrasquel y entérate de los próximos eventos.">
+<meta name="theme-color" content="#06141c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06141c; --surface:#0b1f2a; --line:#1a3947; --text:#e6f4f7; --muted:#8db0ba;
+  --accent:#3df58a; --busy:#4a6572; --warn:#f0b545;
+  --display:"Space Grotesk","Segoe UI",system-ui,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  color-scheme:dark; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--text);font:400 1rem/1.6 var(--body)}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 1.25rem}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;font-weight:500;letter-spacing:-.02em}
+h2{font-size:clamp(1.7rem,4vw,2.4rem);margin-bottom:.6rem}
+p{margin:0 0 1rem;max-width:62ch}
+.muted{color:var(--muted)}
+section{padding:4.5rem 0;border-top:1px solid var(--line)}
+@media(max-width:600px){section{padding:3rem 0}.wrap{padding:0 1rem}}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+header.nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 0;gap:1rem}
+.brand{font-family:var(--display);font-weight:700;text-decoration:none}
+.brand span{color:var(--accent)}
+nav a{margin-left:1.25rem;color:var(--muted);text-decoration:none;font-size:.95rem}
+nav a:hover{color:var(--text)}
+@media(max-width:700px){nav a.hide{display:none}nav a{margin-left:.9rem}}
+
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:2rem;align-items:center;padding:3rem 0 4rem}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding:1.5rem 0 3rem}}
+.hero h1{font-size:clamp(2.4rem,7vw,4.4rem);font-weight:700;margin-bottom:1.2rem}
+.hero p{font-size:1.1rem;color:var(--muted)}
+.btn{display:inline-block;background:var(--accent);color:#031218;font:500 1rem var(--display);padding:.8rem 1.5rem;border-radius:999px;text-decoration:none;border:0;cursor:pointer;min-height:44px}
+.btn:hover{filter:brightness(1.1)}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn.sm{padding:.55rem 1.1rem;font-size:.9rem;min-height:40px}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.heroBtns{display:flex;flex-wrap:wrap;gap:.6rem}
+.track{width:100%;height:auto}
+.track .lane{fill:none;stroke:var(--line);stroke-width:2}
+.track .lane.main{stroke:var(--accent);stroke-opacity:.55}
+.track .pitch{fill:none;stroke:var(--line);stroke-width:1.5}
+.runner{fill:var(--accent);filter:drop-shadow(0 0 8px var(--accent));animation:run 9s linear infinite}
+.track .runner{offset-path:path("M130 40 H270 A80 80 0 0 1 270 200 H130 A80 80 0 0 1 130 40 Z")}
+@keyframes run{to{offset-distance:100%}}
+
+.tags{display:flex;flex-wrap:wrap;gap:.35rem;margin:0 0 .8rem}
+.tag{font-size:.8rem;border:1px solid var(--line);border-radius:999px;padding:.1rem .65rem;color:var(--accent);background:transparent;line-height:1.6;font-family:var(--body)}
+button.tag{cursor:pointer;color:var(--muted);min-height:36px;padding:.3rem .9rem;font-size:.9rem}
+button.tag[aria-pressed="true"]{background:var(--accent);color:#031218;border-color:var(--accent)}
+
+/* Espacios: tarjetas de color que se deslizan en el móvil */
+.spaces{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+@media(max-width:800px){.spaces{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:.9rem;padding-bottom:.8rem;margin-right:-1rem;padding-right:1rem;-webkit-overflow-scrolling:touch}.space{flex:0 0 84%;scroll-snap-align:start}}
+.space{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;text-align:left;color:inherit;transition:border-color .2s,transform .2s;display:flex;flex-direction:column}
+.space:hover{border-color:var(--accent);transform:translateY(-3px)}
+.space.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.space .art{--ac:#06141c;background:#c9b6f5;padding:1rem;cursor:pointer;border:0;display:block;width:100%}
+.space[data-space="campo"] .art{background:#f7d98b}
+.space[data-space="pista"] .art{background:#8fe3b8}
+.space .art svg{display:block;width:100%;height:auto;fill:none;stroke:var(--ac);stroke-opacity:.85;stroke-width:1.6}
+.space .info{padding:1.2rem 1.3rem 1.4rem;display:flex;flex-direction:column;flex:1;cursor:pointer}
+.space h3{font-size:1.2rem;margin-bottom:.6rem}
+.space p{color:var(--muted);margin:0 0 .8rem;font-size:.95rem}
+.space .go{margin-top:auto;align-self:flex-start}
+.ball{fill:var(--ac);fill-opacity:.25;stroke-opacity:1;stroke:var(--ac)}
+.art svg .ln{stroke-opacity:1}
+.bounce{animation:bounce .9s ease-in infinite alternate;transform-box:fill-box}
+@keyframes bounce{from{transform:translateY(-42px)}to{transform:translateY(0)}}
+.shade{fill:var(--ac);fill-opacity:.3;stroke:none;transform-box:fill-box;transform-origin:center;animation:shade .9s ease-in infinite alternate}
+@keyframes shade{from{transform:scale(.5)}to{transform:scale(1)}}
+.roll{animation:roll 3.4s ease-in-out infinite alternate}
+@keyframes roll{from{transform:translateX(0)}to{transform:translateX(100px)}}
+.spin{transform-box:fill-box;transform-origin:center;animation:spin 3.4s ease-in-out infinite alternate}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(820deg)}}
+.art .runner{fill:var(--ac);filter:none;offset-path:path("M57 20 H143 A35 35 0 0 1 143 90 H57 A35 35 0 0 1 57 20 Z");animation-duration:6s}
+/* Solo se detiene el punto grande del inicio. Los balones de las canchas son pequeños y se mantienen en movimiento. */
+@media(prefers-reduced-motion:reduce){.track .runner{animation:none;offset-distance:20%}html{scroll-behavior:auto}}
+
+/* Eventos */
+.events{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1rem;margin-top:2rem}
+.event{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.2rem;display:grid;grid-template-columns:68px 1fr;gap:1rem;align-content:start}
+.event.next{border-color:var(--accent)}
+.ev-date{border:1px solid var(--line);border-radius:12px;text-align:center;padding:.5rem .2rem;align-self:start;background:var(--bg)}
+.event.next .ev-date{border-color:var(--accent)}
+.ev-date b{display:block;font:700 1.7rem/1 var(--display);color:var(--accent)}
+.ev-date span{display:block;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:.2rem}
+.event h3{font-size:1.2rem;margin:.2rem 0 .4rem}
+.event p{color:var(--muted);margin:0 0 .5rem;font-size:.95rem}
+.event .when{color:var(--text);text-transform:capitalize}
+.event .left{color:var(--accent);font-size:.85rem}
+.ev-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.6rem}
+.evform{margin-top:.8rem;padding-top:.8rem;border-top:1px solid var(--line)}
+.evform label{margin-bottom:.6rem}
+.evform .fine{margin:.2rem 0 .6rem}
+.evform .msg{color:var(--accent);font-size:.9rem;margin:.6rem 0 0}
+.evform .msg a{text-decoration:underline}
+.askbox{max-width:520px;margin-top:1rem}
+.cta{margin-top:1.5rem}
+.empty{border:1px dashed var(--line);border-radius:14px;padding:1.4rem;color:var(--muted);margin-top:2rem}
+.empty p{margin:0}
+
+/* Resultados */
+.ticker{overflow:hidden;white-space:nowrap;border-block:1px solid var(--line);margin:1.5rem 0 0;padding:.7rem 0;font:500 1rem var(--display);color:var(--muted)}
+.ticker .tk{display:inline-block;padding-left:100%;animation:tick 45s linear infinite}
+.ticker b{color:var(--accent);font-weight:500}
+.ticker i{font-style:normal;color:var(--line);padding:0 .9rem}
+@keyframes tick{to{transform:translateX(-100%)}}
+@media(prefers-reduced-motion:reduce){.ticker{white-space:normal}.ticker .tk{animation:none;padding-left:0}}
+.rtabs{display:flex;gap:.6rem;overflow-x:auto;padding:1.2rem .2rem .6rem;-webkit-overflow-scrolling:touch}
+.rtab{flex:none;border:0;border-radius:16px;padding:.7rem 1.2rem;font:500 1rem var(--display);color:#06141c;cursor:pointer;min-height:44px;opacity:.6}
+.rtab[aria-pressed="true"]{opacity:1;box-shadow:0 0 0 2px var(--text)}
+.rpanel{display:grid;grid-template-columns:.85fr 1.15fr;gap:1rem;margin-top:.6rem}
+@media(max-width:800px){.rpanel{grid-template-columns:1fr}}
+.rart{border-radius:18px;min-height:220px;display:grid;place-items:center;overflow:hidden;padding:1rem}
+.rart img,.rart video,.rart .lot{display:block;width:100%;max-width:340px;max-height:320px;object-fit:contain;animation:floaty 5s ease-in-out infinite}
+.rart .big{font:700 clamp(2rem,9vw,3.4rem)/1 var(--display);color:#06141c;opacity:.85;text-align:center}
+@keyframes floaty{50%{transform:translateY(-10px) rotate(-1.5deg)}}
+@media(prefers-reduced-motion:reduce){.rart img,.rart video,.rart .lot{animation:none}}
+@keyframes swapin{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+.rpanel.swap .rart,.rpanel.swap .rboard{animation:swapin .45s ease both}
+@media(prefers-reduced-motion:reduce){.rpanel.swap .rart,.rpanel.swap .rboard{animation:none}}
+.rboard{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1rem 1.2rem}
+.rboard .tags{margin-bottom:.2rem}
+.rgroup h3{font-size:.95rem;color:var(--muted);font-weight:500;margin:1rem 0 .2rem}
+.rlist{list-style:none;margin:0;padding:0}
+.rrow{display:grid;grid-template-columns:1fr auto 1fr;gap:.2rem .7rem;align-items:center;padding:.6rem 0;border-bottom:1px solid var(--line)}
+.rrow .fase{grid-column:1/-1;font-size:.8rem;color:var(--muted)}
+.rrow .a{text-align:right}
+.rrow .sc{font:700 1.25rem var(--display);text-align:center;white-space:nowrap}
+.rrow .w{color:var(--accent);font-weight:500}
+.rrow.rank{grid-template-columns:1fr auto}
+.rrow.rank .sc{font-size:1.05rem;color:var(--accent)}
+.rmore{margin-top:1rem}
+
+/* Entrenadores */
+.trainers{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:1rem;margin-top:1.4rem}
+.trainer{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.2rem;display:flex;gap:1rem;align-items:flex-start}
+.avatar{flex:none;width:64px;height:64px;border-radius:50%;border:1px solid var(--accent);display:grid;place-items:center;font:500 1.3rem var(--display);color:var(--accent);background:var(--bg);overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.trainer h3{font-size:1.1rem;margin-bottom:.4rem}
+.trainer p{margin:0;color:var(--muted);font-size:.9rem}
+
+/* Reserva: una sola columna, en el orden en que se llena */
+.stepper{list-style:none;display:flex;gap:.5rem;flex-wrap:wrap;margin:1.2rem 0 0;padding:0;counter-reset:s}
+.stepper li{counter-increment:s;display:flex;align-items:center;gap:.5rem;color:var(--muted);font-size:.9rem;border:1px solid var(--line);border-radius:999px;padding:.3rem .9rem .3rem .4rem}
+.stepper li::before{content:counter(s);width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line);font-size:.8rem}
+.stepper li.on{color:var(--text);border-color:var(--accent)}
+.stepper li.on::before{background:var(--accent);color:#031218;border-color:var(--accent)}
+.flow{display:flex;flex-direction:column;gap:1rem;max-width:720px;margin-top:2rem}
+#sportBox{order:1}#actBox{order:2}#pkgBox{order:3}#calBox{order:3}#timeBox{order:4}#detailBox{order:6}
+.flow.pack #calBox{order:5}
+.lbl{font-size:.9rem;color:var(--muted);margin:0 0 .5rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.4rem}
+.chip{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.55rem 1rem;font:400 .95rem var(--body);cursor:pointer;min-height:44px;text-align:left}
+.chip[aria-pressed="true"]{color:#031218;background:var(--accent);border-color:var(--accent)}
+.cal{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1rem}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
+.cal-head strong{font-family:var(--display);font-weight:500;font-size:1.15rem;text-transform:capitalize}
+.icon{background:none;border:1px solid var(--line);color:var(--text);width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:1.1rem}
+.icon:hover{border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+@media(max-width:420px){.cal{padding:.5rem}.grid{gap:2px}}
+.dow{font-size:.8rem;color:var(--muted);padding:.3rem 0}
+.day{position:relative;aspect-ratio:1;min-height:44px;border:0;border-radius:10px;background:transparent;color:var(--text);font:400 .95rem var(--body);cursor:pointer;padding:0}
+.day:hover:not(:disabled){background:var(--line)}
+.day:disabled{color:var(--busy);cursor:not-allowed;opacity:.6}
+.day.today{box-shadow:inset 0 0 0 1px var(--accent)}
+.day.dot::after{content:"";position:absolute;bottom:5px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--warn)}
+.day.conf{background:rgba(240,181,69,.16);color:var(--warn);text-decoration:line-through}
+.day.sel,.day.hl,.day.hl:disabled{background:var(--accent);color:#031218;font-weight:500;opacity:1;text-decoration:none}
+.legend{display:flex;flex-wrap:wrap;gap:.4rem 1rem;font-size:.8rem;color:var(--muted);margin:.6rem 0 0}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:.35rem;vertical-align:-1px}
+.legend .l1{background:var(--accent)}.legend .l2{background:rgba(240,181,69,.35)}.legend .l3{background:var(--warn);border-radius:50%;width:6px;height:6px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.2rem}
+.panel h3{font-size:1.1rem;margin-bottom:.8rem}
+.cap{text-transform:capitalize}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+label{display:block;font-size:.9rem;color:var(--muted);margin-bottom:.8rem}
+input,textarea,select{display:block;width:100%;margin-top:.3rem;background:var(--bg);border:1px solid var(--line);border-radius:10px;color:var(--text);padding:.7rem .9rem;font:400 1rem var(--body);color-scheme:dark;min-height:44px}
+input:disabled,select:disabled,textarea:disabled{opacity:.55}
+textarea{min-height:76px;resize:vertical}
+input[type=file]{padding:.55rem}
+select{appearance:auto}
+.chk{display:flex;gap:.7rem;align-items:flex-start;font-size:.9rem}
+.chk input{width:22px;height:22px;min-height:0;flex:none;margin:.15rem 0 0;accent-color:var(--accent)}
+.chk a{color:var(--accent)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.hint{font-size:.9rem;color:var(--muted);margin:0 0 .8rem}
+.busy{font-size:.9rem;color:var(--warn);margin:0 0 .8rem}
+.summary{min-height:1.4em;margin:0 0 .4rem}
+.total{font:500 1.5rem var(--display);color:var(--accent);margin-bottom:.2rem}
+.warn{color:var(--warn);font-size:.9rem;min-height:1.2em;margin:.2rem 0 .6rem}
+.paystep{margin-top:1rem;max-width:720px}
+.methods{display:flex;flex-wrap:wrap;gap:.5rem;margin:.4rem 0 1rem}
+.acct{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:1.2rem 1.4rem}
+.acct-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding-bottom:.8rem;border-bottom:1px solid var(--line);margin-bottom:.6rem}
+.acct-head h3{font-size:1.2rem;margin:0}
+.row{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.6rem 0}
+.row span{display:block;color:var(--muted);font-size:.85rem}
+.row b{font-weight:500;overflow-wrap:anywhere}
+.row b.pend{color:var(--muted);font-weight:400;font-style:italic}
+.copy{background:none;border:1px solid var(--line);color:var(--accent);border-radius:999px;padding:.3rem .8rem;font:400 .85rem var(--body);cursor:pointer;flex:none;min-height:36px}
+.copy.all{border-color:var(--accent)}
+.note{color:var(--warn);font-size:.9rem;margin:.6rem 0 0}
+#payInfo{margin-bottom:1rem}
+#status,#formMsg{margin-top:1rem;color:var(--accent)}
+#formMsg{color:var(--warn);margin:.6rem 0 0}
+#status a{text-decoration:underline}
+.linkbtn{background:none;border:0;color:var(--accent);font:400 .9rem var(--body);text-decoration:underline;cursor:pointer;padding:.6rem 0;min-height:44px}
+
+/* Memoria */
+.mem{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1rem;margin-top:2rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.3rem}
+.card h3{font-size:1.2rem;margin-bottom:.5rem}
+.card p{color:var(--muted);margin:0 0 .8rem;font-size:.95rem}
+.card.call{border-style:dashed}
+.card figure{margin:0}
+.card img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;margin-bottom:.6rem}
+.card figcaption{font-size:.9rem;color:var(--muted)}
+.fine{font-size:.8rem;color:var(--muted);margin-top:1.2rem}
+
+/* Reglas */
+.acc{margin-top:2rem;max-width:760px}
+.acc details{border-bottom:1px solid var(--line)}
+.acc summary{cursor:pointer;padding:1.1rem 0;font:500 1.15rem var(--display);list-style:none;display:flex;justify-content:space-between;gap:1rem;min-height:44px}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:"+";color:var(--accent);font-size:1.4rem;line-height:1}
+.acc details[open] summary::after{content:"–"}
+.acc .body{padding:0 0 1.2rem;color:var(--muted);font-size:.95rem}
+.acc .body ul{margin:0 0 .8rem;padding-left:1.2rem}
+.acc .body li{margin-bottom:.45rem}
+.acc .body b{color:var(--text);font-weight:500}
+
+.steps{list-style:none;margin:2rem 0 0;padding:0 0 0 1.4rem;border-left:1px solid var(--line)}
+.steps li{position:relative;padding:0 0 1.6rem 1rem}
+.steps li::before{content:"";position:absolute;left:-1.4rem;top:.5rem;width:11px;height:11px;margin-left:-5px;border-radius:50%;background:var(--bg);border:2px solid var(--muted)}
+.steps li.done::before{background:var(--accent);border-color:var(--accent)}
+.steps h3{font-size:1.1rem}
+.steps p{margin:.2rem 0 0;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:2rem 0;color:var(--muted);font-size:.9rem}
+footer a{color:var(--text)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="nav">
+    <a class="brand" href="#inicio">Polideportivo <span>Alejandro Carrasquel</span></a>
+    <nav><a href="#espacios">Reservar</a><a href="#eventos">Eventos</a><a class="hide" href="#resultados">Resultados</a><a class="hide" id="navEnt" href="#entrenadores" hidden>Entrenadores</a><a class="hide" href="#memoria">Memoria</a><a class="hide" href="#reglas">Reglas</a></nav>
+  </header>
+
+  <main id="inicio">
+    <div class="hero">
+      <div>
+        <h1>Nuestro polideportivo vuelve a moverse.</h1>
+        <p>Fútbol, fútbol sala, atletismo, voleibol, básquet y yoga. Alquila un espacio y tu aporte se queda en el polideportivo.</p>
+        <div class="heroBtns"><a class="btn" href="#espacios">Reservar un espacio</a><a class="btn ghost" href="#eventos">Ver eventos</a></div>
+      </div>
+      <svg class="track" viewBox="0 0 400 240" role="img" aria-label="Dibujo de una pista de atletismo con un punto que la recorre">
+        <path class="lane" d="M130 20 H270 A100 100 0 0 1 270 220 H130 A100 100 0 0 1 130 20 Z"/>
+        <path class="lane main" d="M130 40 H270 A80 80 0 0 1 270 200 H130 A80 80 0 0 1 130 40 Z"/>
+        <path class="lane" d="M130 60 H270 A60 60 0 0 1 270 180 H130 A60 60 0 0 1 130 60 Z"/>
+        <rect class="pitch" x="130" y="80" width="140" height="80" rx="4"/>
+        <line class="pitch" x1="200" y1="80" x2="200" y2="160"/>
+        <circle class="pitch" cx="200" cy="120" r="14"/>
+        <circle class="runner" r="6"/>
+      </svg>
+    </div>
+  </main>
+
+  <section id="espacios">
+    <h2>¿Qué quieres reservar?</h2>
+    <p class="muted">Toca tu deporte o el espacio. <span id="horarioTxt"></span></p>
+    <div class="spaces">
+      <article class="space" data-space="multi">
+        <div class="art"><svg viewBox="0 0 200 110" aria-hidden="true"><rect x="10" y="10" width="180" height="90" rx="4"/><line x1="100" y1="10" x2="100" y2="100"/><circle cx="100" cy="55" r="16"/><rect x="10" y="33" width="26" height="44"/><rect x="164" y="33" width="26" height="44"/><ellipse class="shade" cx="100" cy="90" rx="10" ry="2.5"/><g class="bounce"><circle class="ball" cx="100" cy="80" r="8"/><path class="ln" d="M92 80h16M100 72v16"/></g></svg></div>
+        <div class="info"><h3>Cancha de usos múltiples</h3><div class="tags"><button type="button" class="tag" data-sport="sala">Fútbol sala</button><button type="button" class="tag" data-sport="voley">Voleibol</button><button type="button" class="tag" data-sport="basquet">Básquet</button><button type="button" class="tag" data-sport="yoga">Yoga</button></div><p>Pintura nueva. Para partidos, entrenamientos y clases.</p><button type="button" class="btn sm go">Reservar aquí</button></div>
+      </article>
+      <article class="space" data-space="campo">
+        <div class="art"><svg viewBox="0 0 200 110" aria-hidden="true"><rect x="10" y="10" width="180" height="90" rx="4"/><line x1="100" y1="10" x2="100" y2="100"/><circle cx="100" cy="55" r="14"/><rect x="10" y="28" width="30" height="54"/><rect x="160" y="28" width="30" height="54"/><rect x="10" y="42" width="12" height="26"/><rect x="178" y="42" width="12" height="26"/><g class="roll"><g class="spin"><circle class="ball" cx="50" cy="55" r="7"/><path class="ln" d="M50 51l3.5 2.5-1.3 4h-4.4l-1.3-4z"/></g></g></svg></div>
+        <div class="info"><h3>Campo de fútbol</h3><div class="tags"><button type="button" class="tag" data-sport="futbol">Fútbol</button></div><p>Para partidos, torneos y entrenamientos.</p><button type="button" class="btn sm go">Reservar aquí</button></div>
+      </article>
+      <article class="space" data-space="pista">
+        <div class="art"><svg viewBox="0 0 200 110" aria-hidden="true"><rect x="10" y="8" width="180" height="94" rx="47"/><rect x="22" y="20" width="156" height="70" rx="35"/><rect x="34" y="32" width="132" height="46" rx="23"/><circle class="runner" r="5"/></svg></div>
+        <div class="info"><h3>Pista de atletismo</h3><div class="tags"><button type="button" class="tag" data-sport="atletismo">Atletismo</button></div><p>Para clubes, entrenamientos y eventos de carrera.</p><button type="button" class="btn sm go">Reservar aquí</button></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="reservar" hidden>
+    <h2 id="resTitle">Tu reserva</h2>
+    <p class="muted">Elige el día y el horario. Al continuar, tu horario queda apartado mientras pagas.</p>
+    <ol class="stepper" id="stepper"><li class="on">Reserva</li><li>Pago</li></ol>
+
+    <div class="flow" id="flow">
+      <div id="sportBox"><p class="lbl">Deporte</p><div class="chips" id="chipsSport" role="group" aria-label="Deporte"></div></div>
+      <div id="actBox"><p class="lbl">Tipo de reserva</p><div class="chips" id="chipsAct" role="group" aria-label="Tipo de reserva"></div></div>
+
+      <div class="panel" id="pkgBox" hidden>
+        <p class="lbl">Días de la semana (puedes elegir varios)</p>
+        <div class="chips" id="wdays" role="group" aria-label="Días de la semana"></div>
+        <label>Durante<select id="months"></select></label>
+      </div>
+
+      <div class="cal" id="calBox">
+        <div class="cal-head">
+          <button class="icon" id="prev" aria-label="Mes anterior">&#8249;</button>
+          <strong id="monthLabel"></strong>
+          <button class="icon" id="next" aria-label="Mes siguiente">&#8250;</button>
+        </div>
+        <div class="grid" id="grid"></div>
+        <p class="legend"><span><i class="l1"></i>Tu reserva</span><span><i class="l2"></i>Ocupado en tu horario</span><span><i class="l3"></i>Hay horas reservadas</span></p>
+      </div>
+
+      <div class="panel" id="timeBox">
+        <h3 class="cap" id="dayTitle">Elige un día</h3>
+        <p class="hint" id="actHint"></p>
+        <div class="two">
+          <label>Desde<select id="from"></select></label>
+          <label>Hasta<select id="to"></select></label>
+        </div>
+        <p class="busy" id="busy" hidden></p>
+        <p class="warn" id="warn"></p>
+        <label class="chk" id="omitBox" hidden><input type="checkbox" id="omit"><span>Reservar solo los días libres (omitir los ocupados)</span></label>
+      </div>
+
+      <div class="panel" id="detailBox">
+        <label id="teamsBox" hidden>Equipos que juegan<input type="number" id="teams" min="1" max="10" value="2" inputmode="numeric"></label>
+        <label>Cuéntanos qué van a hacer (opcional)<textarea id="desc" maxlength="300" placeholder="Ej.: Torneo de baloncesto Alejandro Carrasquel"></textarea></label>
+        <label>Tu nombre<input id="nombre" autocomplete="name" maxlength="80"></label>
+        <label>Tu teléfono (WhatsApp)<input id="tel" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="0424 1234567"></label>
+        <div class="hp" aria-hidden="true"><label>Web<input id="web" tabindex="-1" autocomplete="off"></label></div>
+        <label class="chk"><input type="checkbox" id="acepto"><span>Acepto la <a href="#reglas" data-open="det-cancel">política de cancelación</a> y el <a href="#reglas" data-open="det-priv">aviso de privacidad</a>.</span></label>
+        <p class="summary" id="summary"></p>
+        <div class="total" id="total"></div>
+        <button class="btn" id="goPay" disabled>Continuar al pago</button>
+        <p id="formMsg" role="status"></p>
+      </div>
+    </div>
+
+    <div class="panel paystep" id="payStep" hidden>
+      <h3>Pago</h3>
+      <p class="hint" id="paySummary"></p>
+      <div class="total" id="payTotal"></div>
+      <p class="hint" id="holdInfo"></p>
+      <button type="button" class="linkbtn" id="changeBtn" hidden>Cambiar mi reserva</button>
+      <p class="lbl">¿Cómo vas a pagar?</p>
+      <div class="methods" id="methods" role="group" aria-label="Forma de pago"></div>
+      <div id="payInfo"></div>
+      <label>Número de referencia o de recibo<input id="ref" maxlength="40" autocomplete="off"></label>
+      <label id="shotBox">Captura o foto de tu comprobante<input type="file" id="shot" accept="image/*,application/pdf"></label>
+      <p class="hint" id="shotHint"></p>
+      <button class="btn" id="submit">Reportar mi pago</button>
+      <p id="status" role="status"></p>
+    </div>
+  </section>
+
+  <section id="eventos">
+    <h2>Próximos eventos</h2>
+    <p class="muted">Torneos, competencias y actividades de la comunidad. Todos están invitados.</p>
+    <div class="events" id="events"></div>
+    <div class="empty" id="evEmpty" hidden><p>Pronto publicaremos aquí los próximos torneos y competencias.</p></div>
+    <div class="cta"><button type="button" class="btn ghost" id="evAsk">Quiero promocionar un evento</button></div>
+    <div class="askbox" id="askBox"></div>
+  </section>
+
+  <section id="resultados">
+    <h2>Resultados</h2>
+    <p class="muted">Los marcadores de las competencias del polideportivo, por categoría.</p>
+    <p class="note" id="rsDemo" hidden>Vista de ejemplo: estos no son resultados reales. Se ocultan solos cuando publiques los primeros.</p>
+    <div class="ticker" id="ticker" hidden><div class="tk" id="tk"></div></div>
+    <div class="rtabs" id="rtabs" role="group" aria-label="Categoría"></div>
+    <div class="rpanel" id="rpanel" hidden>
+      <div class="rart" id="rart"></div>
+      <div class="rboard"><div class="tags" id="rrama" role="group" aria-label="Rama"></div><div id="rlist"></div></div>
+    </div>
+    <div class="empty" id="rsEmpty" hidden><p>Aún no hay resultados publicados. Aquí aparecerán los marcadores de torneos y competencias.</p></div>
+  </section>
+
+  <section id="entrenadores" hidden>
+    <h2>Nuestros entrenadores</h2>
+    <p class="muted">Profesores e instructores que acompañan a la comunidad.</p>
+    <div class="tags" id="trFilter" role="group" aria-label="Filtrar por especialidad"></div>
+    <div class="trainers" id="trainers"></div>
+  </section>
+
+  <section id="memoria">
+    <h2>Memoria del polideportivo</h2>
+    <p class="muted">Lo que ha pasado en estas canchas es parte de nuestra historia.</p>
+    <div class="mem" id="mem"></div>
+    <p class="fine">Publicamos solo fotos de personas adultas que lo autorizan y no publicamos fotos de menores de edad. Si apareces en una foto y quieres que la retiremos, escríbenos por WhatsApp. Esta sección es un homenaje histórico y no implica patrocinio ni respaldo de las personas mencionadas.</p>
+  </section>
+
+  <section id="reglas">
+    <h2>Reglas, cancelación y privacidad</h2>
+    <p class="muted">Lo que debes saber antes de reservar.</p>
+    <div class="acc">
+      <details id="det-reglas"><summary>Reglas de uso</summary><div class="body">
+        <ul>
+          <li>Respeta el horario reservado: el tiempo no se extiende y llegar tarde no reduce el costo.</li>
+          <li>Cuida las instalaciones y deja el espacio limpio. Quien reserva responde por los daños que ocurran durante su horario.</li>
+          <li>Los menores de edad deben estar siempre acompañados por un adulto responsable.</li>
+          <li>Cada persona practica bajo su propia responsabilidad. El Consejo Comunal no responde por lesiones ni por objetos perdidos.</li>
+          <li>Eventos y torneos se aprueban caso por caso con el administrador.</li>
+        </ul>
+      </div></details>
+      <details id="det-cancel"><summary>Política de cancelación</summary><div class="body">
+        <p><b>Apartado y confirmación.</b> Al continuar con tu reserva, tu horario queda apartado por 24 horas (o hasta una hora antes de empezar, lo que ocurra primero). Si no reportas el pago en ese tiempo, se libera solo. Cuando reportas el pago, tu horario se mantiene mientras el administrador lo concilia (una transferencia puede tardar hasta 48 horas). La reserva queda confirmada solo cuando el administrador te lo escribe.</p>
+        <p><b>Si cancelas tú</b> (escríbenos por WhatsApp con tu código):</p>
+        <ul>
+          <li><b>48 horas o más antes:</b> devolución del 100 % o cambio de fecha sin costo.</li>
+          <li><b>Entre 24 y 48 horas antes:</b> un cambio de fecha, o devolución del 50 %.</li>
+          <li><b>Menos de 24 horas o si no te presentas:</b> sin devolución.</li>
+          <li><b>Paquetes mensuales:</b> puedes cancelar días sueltos con 48 horas de anticipación; esos días quedan como crédito para reprogramar dentro de los 30 días siguientes.</li>
+        </ul>
+        <p><b>Si cancelamos nosotros</b> (lluvia que deje el campo en mal estado, falta de luz o de servicios, mantenimiento, actividad de la comunidad o razones de seguridad): reprogramamos sin costo o devolvemos el 100 %.</p>
+        <p><b>Devoluciones.</b> Se hacen por el mismo medio de pago, hasta 5 días hábiles después de aceptada la cancelación. Si pagaste en bolívares, se calculan en dólares al cambio BCV del día de la devolución.</p>
+      </div></details>
+      <details id="det-priv"><summary>Aviso de privacidad</summary><div class="body">
+        <p>Para reservar, anotarte en un evento o escribirnos pedimos tu <b>nombre y teléfono</b>; para pagar, también tu <b>número de referencia y comprobante</b>. Los usamos solo para gestionar tu solicitud y conciliar el pago.</p>
+        <ul>
+          <li>Los ve únicamente el equipo del Consejo Comunal encargado de la administración. No los publicamos ni los compartimos con terceros.</li>
+          <li>Tu comprobante puede mostrar datos bancarios: tapa los que no sean la referencia, el monto y la fecha.</li>
+          <li>Se conservan para la rendición de cuentas del Consejo Comunal.</li>
+          <li>Para corregir o pedir que eliminemos tus datos, escríbenos por WhatsApp.</li>
+        </ul>
+      </div></details>
+    </div>
+  </section>
+
+  <section id="avance">
+    <h2>Tu aporte se queda en el polideportivo</h2>
+    <p class="muted">Lo que se recauda se invierte en el polideportivo, con autogestión de la comunidad. Aquí ves el avance.</p>
+    <ul class="steps">
+      <li class="done"><h3>Cancha de usos múltiples pintada</h3><p>Lista para fútbol sala, voleibol, básquet, yoga y aeróbicos.</p></li>
+      <li class="done"><h3>Pista y campo abiertos para alquilar</h3><p>Ya puedes reservar tu horario.</p></li>
+      <li><h3>Recuperación del gimnasio</h3><p>Estamos trabajando para volver a abrirlo.</p></li>
+      <li><h3>Mejoras con lo recaudado</h3><p>Cuentas claras de en qué se usa cada aporte.</p></li>
+    </ul>
+  </section>
+</div>
+<footer><div class="wrap">Consejo Comunal Alejandro Carrasquel · WhatsApp: <a href="https://wa.me/584242324870">0424 2324870</a></div></footer>
+
+<script>
+(function(){
+  /* ===== CONFIGURACIÓN: edita aquí ===== */
+  var WHATSAPP="584242324870", TEL_TXT="0424 2324870";
+  var SUBMIT_URL="https://script.google.com/macros/s/AKfycbwm7ntaH0tCFoLVbQI__iUSDHvB4pnwf_8Gu7vgdbD_e4dRTxkZlXIaVsAG_mx0PUqO/exec";   // URL de tu Apps Script (termina en /exec). Vacío = las reservas se envían por WhatsApp
+  var BCV=0;           // tasa BCV del día (ej. 60.5). Si es 0 no se muestra el monto en Bs
+  var OPEN_DAYS=[0,1,2,3,4,5,6];   // días abiertos: 0=domingo, 1=lunes ... 6=sábado
+  var STEP=30;                     // los horarios se eligen cada 30 minutos
+  // Horario por espacio. Cuando no haya luz en el espacio, baja el cierre (ej. "20:00")
+  var HOURS={multi:["06:00","21:00"],campo:["06:00","21:00"],pista:["06:00","21:00"]};
+  var PACK_MIN_HOURS=16, PACK_DISCOUNT=10;   // desde 16 horas en un mes: $10 menos por ese mes
+  function A(id,label,type,price){return {id:id,label:label,type:type,price:price}}
+  var PARTIDO=A("partido","Partido","team",30),            // $30 por equipo
+      ENTRENO=A("entreno","Entrenamiento","hour",10),      // $10 por hora
+      SESION=A("sesion","Sesión","hour",10),               // yoga o aeróbicos
+      PAQUETE=A("paquete","Paquete mensual","pack",10),    // precio por hora menos el descuento
+      EVENTO=A("evento","Evento o torneo","tbd",0);
+  var TIPOS=[PARTIDO,ENTRENO,EVENTO,PAQUETE];
+  var SPORTS={
+    sala:{label:"Fútbol sala",space:"multi",types:TIPOS,ph:"Ej.: Partido de fútbol sala entre vecinos"},
+    voley:{label:"Voleibol",space:"multi",types:TIPOS,ph:"Ej.: Partido amistoso de voleibol"},
+    basquet:{label:"Básquet",space:"multi",types:TIPOS,ph:"Ej.: Torneo de baloncesto Alejandro Carrasquel"},
+    yoga:{label:"Yoga o aeróbicos",space:"multi",types:[SESION,EVENTO,PAQUETE],ph:"Ej.: Clase de yoga para adultos"},
+    futbol:{label:"Fútbol",space:"campo",types:TIPOS,ph:"Ej.: Partido de la liga del consejo comunal"},
+    atletismo:{label:"Atletismo",space:"pista",types:[ENTRENO,EVENTO,PAQUETE],ph:"Ej.: Entrenamiento del club de atletismo"}
+  };
+  var SPACES={
+    multi:{name:"Cancha de usos múltiples",sports:["sala","voley","basquet","yoga"]},
+    campo:{name:"Campo de fútbol",sports:["futbol"]},
+    pista:{name:"Pista de atletismo",sports:["atletismo"]}
+  };
+  // EVENTOS: agrega uno por línea. Los pasados se ocultan solos.
+  // fecha "AAAA-MM-DD"; desde/hasta "HH:MM" (opcionales); espacio: multi | campo | pista
+  // bloquea:true marca ese espacio como ocupado ese día en el calendario de reservas
+  var EVENTS=[
+    {fecha:"2026-11-21",titulo:"Competencia de atletismo",deporte:"Atletismo",espacio:"pista",desde:"",hasta:"",detalle:"",inscripcion:true,bloquea:true}
+  ];
+  // ENTRENADORES: la sección aparece sola cuando agregas al menos un nombre.
+  // foto: dirección de una foto de la persona adulta, con su autorización (opcional)
+  var TRAINERS=[
+    {nombre:"",foto:"",esp:["Básquet"],horario:""},
+    {nombre:"",foto:"",esp:["Fútbol sala"],horario:""},
+    {nombre:"",foto:"",esp:["Escuela de fútbol sala"],horario:""},
+    {nombre:"",foto:"",esp:["Entrenamiento físico"],horario:""},
+    {nombre:"",foto:"",esp:["Atletismo"],horario:""},
+    {nombre:"",foto:"",esp:["Yoga"],horario:""}
+  ];
+  // MEMORIA: historias del polideportivo. Solo fotos de adultos con autorización.
+  var MEM_TEXTOS=[
+    {titulo:"Por aquí pasó Yulimar Rojas",texto:"La campeona olímpica de triple salto pasó por este polideportivo. Es una referencia para toda una generación y nos recuerda que de espacios como este pueden salir grandes sueños.",foto:"",pie:""}
+  ];
+  var MEM_FOTOS=[]; // {src:"dirección",pie:"Descripción y año"}
+  // DATOS DE PAGO: completa todos los campos. Los vacíos se muestran como "Por configurar".
+  var ACC={
+    pm:{title:"Pago Móvil",rows:[["Banco",""],["Cédula o RIF",""],["Teléfono",""]]},
+    tr:{title:"Transferencia bancaria",rows:[["Banco",""],["Titular",""],["Tipo de cuenta",""],["Número de cuenta",""],["Cédula o RIF",""]]},
+    usd:{title:"Cuenta en dólares",rows:[["Banco",""],["Titular",""],["Número de cuenta",""],["Cédula o RIF",""]]}
+  };
+  var BS="El monto en bolívares es al cambio del BCV del día del pago.";
+  var METHODS=[
+    {id:"pm",label:"Pago Móvil",acc:"pm",note:BS},
+    {id:"tr",label:"Transferencia",acc:"tr",note:"La transferencia puede tardar hasta 48 horas en reflejarse, según el banco. "+BS},
+    {id:"dep",label:"Depósito",acc:"tr",note:BS},
+    {id:"usd",label:"Depósito USD",acc:"usd",note:""},
+    {id:"cash",label:"Efectivo divisas",acc:null,note:"Entrega el efectivo en divisas a la persona encargada del polideportivo y pide tu recibo. Escribe el número del recibo y sube una foto como comprobante."}
+  ];
+  /* ===================================== */
+
+  var DN=["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+  var WDS=["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"];
+  var WD=["lunes","martes","miércoles","jueves","viernes","sábados","domingos"];
+  var today=new Date();today.setHours(0,0,0,0);
+  var st={space:"multi",sport:"sala",act:SPORTS.sala.types[0],y:today.getFullYear(),m:today.getMonth(),day:null,method:null,wd:[],months:1,omit:false,hold:null,tel:"",nombre:"",resumen:""};
+  var remote={};   // horas ocupadas que llegan del servidor
+  var BLOCK={};    // horas bloqueadas por eventos
+  var $=function(id){return document.getElementById(id)};
+  function el(tag,cls,text){var e=document.createElement(tag);if(cls){e.className=cls}if(text!=null){e.textContent=text}return e}
+  function pad(n){return (n<10?"0":"")+n}
+  function mins(s){var p=s.split(":");return +p[0]*60+ +p[1]}
+  function f12(s){var m=typeof s==="number"?s:mins(s),h=Math.floor(m/60)%24,mm=m%60,sf=(h>=12)?"pm":"am";h=h%12||12;return h+":"+pad(mm)+" "+sf}
+  function hhmm(m){return pad(Math.floor(m/60))+":"+pad(m%60)}
+  function money(n){n=Math.round(n*100)/100;return "$"+(n%1?n.toFixed(2):n)}
+  function iso(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
+  function parseISO(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2])}
+  function waLink(msg){return "https://wa.me/"+WHATSAPP+(msg?"?text="+encodeURIComponent(msg):"")}
+  function longDate(d){return d.toLocaleDateString("es",{weekday:"long",day:"numeric",month:"long",year:"numeric"})}
+  function shortDate(d){return d.toLocaleDateString("es",{weekday:"short",day:"numeric",month:"short"})}
+  function normTel(s){var d=String(s||"").replace(/\D/g,"");if(d.indexOf("0")===0){d="58"+d.slice(1)}return d}
+  function isPack(){return st.act.type==="pack"}
+  function hrs(){return HOURS[st.space]}
+  function isOpenDay(d){return st.act.type==="tbd"||OPEN_DAYS.indexOf(d.getDay())>-1}
+  function tag(a){return a.type==="team"?" · "+money(a.price)+" por equipo":a.type==="hour"?" · "+money(a.price)+" por hora":a.type==="pack"?" · desde "+money(PACK_MIN_HOURS*a.price-PACK_DISCOUNT)+" al mes":" · tarifa por confirmar"}
+  var HINTS={team:"Se cobra por equipo. Normalmente juegan 2 equipos.",hour:"Se cobra por hora. Escribe la hora en que empiezan y terminan.",pack:"Elige los días de la semana, el mes en que empiezas y por cuántos meses. Se reservan todos esos días en el mismo horario. A partir de 16 horas en un mes pagas $10 menos por ese mes. Si algún día está ocupado, puedes omitirlo.",tbd:"La tarifa y la fecha se confirman con el administrador. Puedes proponer cualquier día."};
+  function listDates(ds,max){
+    var t=ds.slice(0,max||6).map(shortDate).join(", ");
+    return ds.length>(max||6)?t+" y "+(ds.length-(max||6))+" más":t;
+  }
+  function copyText(t,btn,label){
+    function ok(){btn.textContent="Copiado";setTimeout(function(){btn.textContent=label},1500)}
+    function fb(){var ta=document.createElement("textarea");ta.value=t;ta.style.cssText="position:fixed;opacity:0";document.body.appendChild(ta);ta.select();try{document.execCommand("copy");ok()}catch(e){btn.textContent="Selecciona y copia"}document.body.removeChild(ta)}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,fb)}else{fb()}
+  }
+
+  /* Horario visible */
+  function openText(){
+    if(OPEN_DAYS.length===7){return "todos los días"}
+    var d=OPEN_DAYS.slice().sort(function(a,b){return ((a+6)%7)-((b+6)%7)});
+    var seq=d.every(function(x,i){return i===0||((x+6)%7)===((d[i-1]+6)%7)+1});
+    var n=d.map(function(x){return DN[x]});
+    return seq&&n.length>2?n[0]+" a "+n[n.length-1]:n.join(", ");
+  }
+  (function(){
+    var k=Object.keys(HOURS),same=k.every(function(x){return HOURS[x][0]===HOURS[k[0]][0]&&HOURS[x][1]===HOURS[k[0]][1]});
+    var t="Horario: "+openText()+", ";
+    if(same){t+="de "+f12(HOURS[k[0]][0])+" a "+f12(HOURS[k[0]][1])+"."}
+    else{t+=k.map(function(x){return SPACES[x].name+" de "+f12(HOURS[x][0])+" a "+f12(HOURS[x][1])}).join("; ")+"."}
+    $("horarioTxt").textContent=t;
+  })();
+
+  /* Ocupación: servidor + eventos */
+  EVENTS.forEach(function(e){
+    if(e.bloquea&&e.espacio&&HOURS[e.espacio]){
+      var k=e.espacio+"|"+e.fecha;(BLOCK[k]=BLOCK[k]||[]).push([e.desde||HOURS[e.espacio][0],e.hasta||HOURS[e.espacio][1],"evento"]);
+    }
+  });
+  function busyOf(space,d){var k=space+"|"+iso(d);return (remote[k]||[]).concat(BLOCK[k]||[])}
+
+  /* Horas */
+  function fillFrom(){
+    var s=$("from"),cur=s.value,h=hrs(),a=mins(h[0]),b=mins(h[1]);
+    s.innerHTML='<option value="">Elige</option>';
+    for(var m=a;m<b;m+=STEP){var o=document.createElement("option");o.value=hhmm(m);o.textContent=f12(m);s.appendChild(o)}
+    if(cur&&[].some.call(s.options,function(o){return o.value===cur})){s.value=cur}
+  }
+  function fillTo(){
+    var s=$("to"),cur=s.value,f=$("from").value,h=hrs(),b=mins(h[1]);
+    s.innerHTML='<option value="">Elige</option>';
+    for(var m=(f?mins(f)+STEP:mins(h[0])+STEP);m<=b;m+=STEP){var o=document.createElement("option");o.value=hhmm(m);o.textContent=f12(m);s.appendChild(o)}
+    if(cur&&[].some.call(s.options,function(o){return o.value===cur})){s.value=cur}
+  }
+  (function(){var s=$("months");for(var i=1;i<=6;i++){var o=document.createElement("option");o.value=i;o.textContent=i+(i===1?" mes":" meses");s.appendChild(o)}})();
+
+  /* Entrada: al tocar un deporte o un espacio aparece la reserva */
+  function setStep(n){Array.prototype.forEach.call($("stepper").children,function(li,k){li.className=(k+1<=n)?"on":""})}
+  function locked(){return !!st.hold}
+  function setLocked(b){["from","to","months","teams","desc","nombre","tel","acepto","omit"].forEach(function(id){$(id).disabled=b})}
+  function choose(key){
+    var sp=SPORTS[key];st.sport=key;st.space=sp.space;st.act=sp.types[0];st.day=null;st.wd=[];st.hold=null;st.method=null;st.omit=false;
+    $("omit").checked=false;setLocked(false);$("payStep").hidden=true;$("status").textContent="";$("formMsg").textContent="";setStep(1);
+    $("reservar").hidden=false;render();
+    $("reservar").scrollIntoView({behavior:"smooth"});
+  }
+  Array.prototype.forEach.call(document.querySelectorAll(".space"),function(c){
+    c.addEventListener("click",function(ev){
+      var t=ev.target.closest("[data-sport]");
+      choose(t?t.getAttribute("data-sport"):SPACES[c.getAttribute("data-space")].sports[0]);
+    });
+  });
+  document.addEventListener("click",function(ev){
+    var a=ev.target.closest("[data-open]");if(a){var d=$(a.getAttribute("data-open"));if(d){d.open=true}}
+  });
+
+  function chips(){
+    var sb=$("chipsSport");sb.innerHTML="";
+    $("sportBox").hidden=SPACES[st.space].sports.length<2;
+    SPACES[st.space].sports.forEach(function(k){
+      var b=document.createElement("button");b.className="chip";b.textContent=SPORTS[k].label;
+      b.setAttribute("aria-pressed",k===st.sport);
+      b.onclick=function(){if(locked())return;st.sport=k;if(SPORTS[k].types.indexOf(st.act)<0){st.act=SPORTS[k].types[0]}render()};
+      sb.appendChild(b);
+    });
+    var o=$("chipsAct");o.innerHTML="";
+    SPORTS[st.sport].types.forEach(function(a){
+      var b=document.createElement("button");b.className="chip";b.textContent=a.label+tag(a);
+      b.setAttribute("aria-pressed",a===st.act);
+      b.onclick=function(){if(locked())return;st.act=a;st.omit=false;$("omit").checked=false;render()};
+      o.appendChild(b);
+    });
+    var w=$("wdays");w.innerHTML="";
+    WDS.forEach(function(n,i){
+      if(OPEN_DAYS.indexOf((i+1)%7)<0){return}
+      var b=document.createElement("button");b.className="chip";b.textContent=n;
+      b.setAttribute("aria-pressed",st.wd.indexOf(i)>-1);
+      b.onclick=function(){if(locked())return;var k=st.wd.indexOf(i);if(k>-1){st.wd.splice(k,1)}else{st.wd.push(i)}render()};
+      w.appendChild(b);
+    });
+  }
+
+  /* Fechas */
+  function pkgDates(){
+    var out=[];if(!st.wd.length){return out}
+    var end=new Date(st.y,st.m+st.months,0);
+    for(var d=new Date(st.y,st.m,1);d<=end;d.setDate(d.getDate()+1)){
+      if(d>=today&&st.wd.indexOf((d.getDay()+6)%7)>-1&&OPEN_DAYS.indexOf(d.getDay())>-1){out.push(new Date(d))}
+    }
+    return out;
+  }
+  function allDates(){
+    if(isPack()){return pkgDates()}
+    return st.day===null?[]:[new Date(st.y,st.m,st.day)];
+  }
+  function conflict(d,f,t){
+    var r=busyOf(st.space,d);
+    for(var i=0;i<r.length;i++){if(mins(f)<mins(r[i][1])&&mins(t)>mins(r[i][0])){return r[i]}}
+    return null;
+  }
+  function cal(all,dates,f,t,timeOk){
+    var first=new Date(st.y,st.m,1),pack=isPack();
+    $("monthLabel").textContent=first.toLocaleDateString("es",{month:"long",year:"numeric"});
+    var g=$("grid");g.innerHTML="";
+    ["Lu","Ma","Mi","Ju","Vi","Sá","Do"].forEach(function(d){var e=document.createElement("div");e.className="dow";e.textContent=d;g.appendChild(e)});
+    var offset=(first.getDay()+6)%7,days=new Date(st.y,st.m+1,0).getDate();
+    for(var i=0;i<offset;i++){g.appendChild(document.createElement("div"))}
+    var hl={},inAll={};
+    dates.forEach(function(d){if(d.getMonth()===st.m&&d.getFullYear()===st.y){hl[d.getDate()]=1}});
+    all.forEach(function(d){if(d.getMonth()===st.m&&d.getFullYear()===st.y){inAll[d.getDate()]=1}});
+    for(var d=1;d<=days;d++){
+      var date=new Date(st.y,st.m,d),b=document.createElement("button"),open=date>=today&&isOpenDay(date);
+      b.className="day";b.textContent=d;b.disabled=pack||!open;
+      b.setAttribute("aria-label",longDate(date));
+      if(+date===+today){b.className+=" today"}
+      if(busyOf(st.space,date).length){b.className+=" dot"}
+      if(timeOk&&open&&conflict(date,f,t)&&(!pack||inAll[d])){b.className+=" conf"}
+      if(pack){if(hl[d]){b.className+=" hl"}}
+      else if(st.day===d){b.className+=" sel"}
+      (function(dd){b.onclick=function(){if(locked())return;st.day=dd;update()}})(d);
+      g.appendChild(b);
+    }
+  }
+
+  /* Texto y precio */
+  function hoursPerDay(){var f=$("from").value,t=$("to").value;return(f&&t&&mins(t)>mins(f))?(mins(t)-mins(f))/60:0}
+  function packInfo(dates){
+    var h=hoursPerDay(),by={},total=0,save=0;
+    dates.forEach(function(d){var k=d.getFullYear()+"-"+d.getMonth();by[k]=(by[k]||0)+1});
+    Object.keys(by).forEach(function(k){
+      var hm=by[k]*h,disc=hm>=PACK_MIN_HOURS?PACK_DISCOUNT:0;
+      total+=hm*st.act.price-disc;save+=disc;
+    });
+    return {total:total,save:save};
+  }
+  function calc(dates){
+    var a=st.act;
+    if(a.type==="tbd"){return null}
+    if(a.type==="team"){return a.price*Math.max(1,+$("teams").value||1)}
+    if(a.type==="pack"){return packInfo(dates).total}
+    return a.price*hoursPerDay();
+  }
+  function currentTotal(){return (st.hold&&typeof st.hold.total==="number")?st.hold.total:calc(cur.dates)}
+  function bsText(t){return BCV>0?" (≈ Bs "+(Math.round(t*BCV*100)/100).toLocaleString("es")+")":""}
+  function wdText(){
+    var n=st.wd.slice().sort().map(function(i){return WD[i]});
+    return "todos los "+(n.length>1?n.slice(0,-1).join(", ")+" y "+n[n.length-1]:n[0]);
+  }
+  function period(){
+    var a=new Date(st.y,st.m,1),b=new Date(st.y,st.m+st.months-1,1),o={month:"long",year:"numeric"};
+    return st.months>1?"desde "+a.toLocaleDateString("es",o)+" hasta "+b.toLocaleDateString("es",o):"de "+a.toLocaleDateString("es",o);
+  }
+  function desc(dates){
+    var h=", de "+f12($("from").value)+" a "+f12($("to").value);
+    if(isPack()){return SPACES[st.space].name+" · "+SPORTS[st.sport].label+" ("+st.act.label+"), "+wdText()+" "+period()+" ("+dates.length+(dates.length===1?" día":" días")+")"+h}
+    return SPACES[st.space].name+" · "+SPORTS[st.sport].label+" ("+st.act.label+"), "+longDate(dates[0])+h;
+  }
+  function totalText(dates){
+    var t=currentTotal();
+    if(t===null){return "Tarifa por confirmar"}
+    var s=money(t);
+    if(isPack()){var hr=Math.round(dates.length*hoursPerDay()*100)/100;s+=" · "+dates.length+" días, "+hr+" horas";var sv=packInfo(dates).save;if(sv>0){s+=" · ahorras "+money(sv)}}
+    return s+bsText(t);
+  }
+  var cur={dates:[],ok:false};
+  function update(){
+    var pack=isPack(),f=$("from").value,t=$("to").value,timeOk=!!f&&!!t&&mins(t)>mins(f);
+    var all=allDates(),dates=all,confl=[];
+    if(timeOk){confl=all.filter(function(d){return conflict(d,f,t)})}
+    if(pack&&st.omit&&confl.length){dates=all.filter(function(d){return !conflict(d,f,t)})}
+    $("flow").classList.toggle("pack",pack);
+    $("pkgBox").hidden=!pack;$("teamsBox").hidden=st.act.type!=="team";
+    $("actHint").textContent=HINTS[st.act.type];
+    $("dayTitle").classList.toggle("cap",!pack);$("dayTitle").textContent=pack?"Horario de cada día":(st.day===null?"Elige un día en el calendario":longDate(new Date(st.y,st.m,st.day)));
+    var b=$("busy");
+    if(!pack&&st.day!==null){
+      var bl=busyOf(st.space,new Date(st.y,st.m,st.day));
+      if(bl.length){b.hidden=false;b.textContent="Ya reservado ese día: "+bl.map(function(x){return f12(x[0])+" a "+f12(x[1])+(x[2]==="evento"?" (evento)":"")}).join(" · ")}else{b.hidden=true}
+    }else{b.hidden=true}
+    var warn="",blocking=false,n=confl.length;
+    if(!pack&&n){var c=conflict(all[0],f,t);warn="Ese día ya está ocupado de "+f12(c[0])+" a "+f12(c[1])+". Elige otro horario o revisa los días marcados en el calendario.";blocking=true}
+    if(pack){
+      if(st.wd.length&&!all.length){warn="Con esos días no quedan fechas disponibles en ese período.";blocking=true}
+      else if(n){
+        if(st.omit){warn=(n===1?"Se omite 1 día ocupado: ":"Se omiten "+n+" días ocupados: ")+listDates(confl);blocking=dates.length===0}
+        else{warn=n+(n===1?" día está ocupado":" días están ocupados")+" en ese horario: "+listDates(confl)+". Cambia el horario o marca la casilla para omitirlos.";blocking=true}
+      }
+    }
+    $("warn").textContent=warn;
+    $("omitBox").hidden=!(pack&&n);
+    var ok=dates.length>0&&timeOk&&!blocking;
+    cur={dates:dates,ok:ok};
+    $("summary").textContent=ok?desc(dates):"";
+    $("total").textContent=ok?totalText(dates):"";
+    $("goPay").disabled=!ok||locked();
+    cal(all,dates,f,t,timeOk);
+    if(!$("payStep").hidden&&!locked()){
+      if(ok){refreshPay()}else{$("payStep").hidden=true;setStep(1)}
+    }
+  }
+  function render(){
+    $("resTitle").textContent="Reserva: "+SPORTS[st.sport].label+" · "+SPACES[st.space].name;
+    $("desc").placeholder=SPORTS[st.sport].ph;
+    Array.prototype.forEach.call(document.querySelectorAll(".space"),function(c){c.classList.toggle("on",c.getAttribute("data-space")===st.space)});
+    fillFrom();fillTo();chips();update();
+  }
+  $("from").addEventListener("change",function(){fillTo();update()});
+  ["to","desc","teams","months"].forEach(function(id){
+    var h=function(){if(id==="months"){st.months=+$("months").value}update()};
+    $(id).addEventListener("input",h);$(id).addEventListener("change",h);
+  });
+  $("omit").addEventListener("change",function(){st.omit=$("omit").checked;update()});
+  $("prev").onclick=function(){
+    if(locked())return;
+    var p=new Date(st.y,st.m-1,1);
+    if(p<new Date(today.getFullYear(),today.getMonth(),1)){return}
+    st.y=p.getFullYear();st.m=p.getMonth();st.day=null;update();
+  };
+  $("next").onclick=function(){if(locked())return;var n=new Date(st.y,st.m+1,1);st.y=n.getFullYear();st.m=n.getMonth();st.day=null;update()};
+
+  /* Servidor (Apps Script) */
+  function post(obj){
+    return fetch(SUBMIT_URL,{method:"POST",body:JSON.stringify(obj)}).then(function(r){if(!r.ok){throw new Error("http")}return r.json()});
+  }
+  function loadBusy(){
+    if(!SUBMIT_URL){return}
+    fetch(SUBMIT_URL+"?accion=ocupado").then(function(r){return r.json()}).then(function(j){if(j&&typeof j==="object"&&!j.error){remote=j;update()}}).catch(function(){});
+  }
+  function ue(m){var e=new Error(m);e.user=true;return e}
+  var ERR={
+    espera:"Espera unos segundos e inténtalo otra vez.",
+    limite:"Ya tienes varias reservas apartadas sin pagar. Reporta su pago o cámbialas.",
+    invalido:"Revisa los datos e inténtalo de nuevo.",
+    vencida:"Tu horario apartado venció. Vuelve a reservar.",
+    estado:"Esta reserva ya no admite pago. Escríbenos con tu código."
+  };
+
+  /* Formas de pago: los datos salen aquí mismo, para copiar */
+  function montoStr(){var t=currentTotal();return t===null?"":money(t)+bsText(t)}
+  function acctCard(ac){
+    var card=el("div","acct"),head=el("div","acct-head");
+    head.appendChild(el("h3","",ac.title));
+    var all=el("button","copy all","Copiar todo");all.type="button";
+    var filled=ac.rows.filter(function(r){return r[1]});
+    all.onclick=function(){
+      var m=montoStr(),txt=ac.title+"\n"+filled.map(function(r){return r[0]+": "+r[1]}).join("\n")+(m?"\nMonto: "+m:"");
+      copyText(txt,all,"Copiar todo");
+    };
+    if(!filled.length){all.hidden=true}
+    head.appendChild(all);card.appendChild(head);
+    ac.rows.forEach(function(r){
+      var row=el("div","row"),left=document.createElement("div");
+      left.appendChild(el("span","",r[0]));left.appendChild(el("b",r[1]?"":"pend",r[1]||"Por configurar"));
+      row.appendChild(left);
+      if(r[1]){var c=el("button","copy","Copiar");c.type="button";c.onclick=function(){copyText(r[1],c,"Copiar")};row.appendChild(c)}
+      card.appendChild(row);
+    });
+    var m=montoStr();
+    if(m){
+      var row2=el("div","row"),l2=document.createElement("div");
+      l2.appendChild(el("span","","Monto a pagar"));l2.appendChild(el("b","",m));row2.appendChild(l2);
+      var c2=el("button","copy","Copiar");c2.type="button";c2.onclick=function(){copyText(m,c2,"Copiar")};row2.appendChild(c2);card.appendChild(row2);
+    }
+    return card;
+  }
+  function showInfo(){
+    var info=$("payInfo"),mt=st.method;info.innerHTML="";
+    if(!mt){return}
+    if(mt.acc){info.appendChild(acctCard(ACC[mt.acc]))}
+    if(mt.note){info.appendChild(el("p","note",mt.note))}
+  }
+  function methodButtons(){
+    var box=$("methods");box.innerHTML="";
+    METHODS.forEach(function(mt){
+      var b=el("button","chip",mt.label);b.type="button";b.setAttribute("aria-pressed",st.method===mt);
+      b.onclick=function(){
+        Array.prototype.forEach.call(box.children,function(x){x.setAttribute("aria-pressed",x===b)});
+        st.method=mt;showInfo();
+      };
+      box.appendChild(b);
+    });
+  }
+
+  /* Paso 1 -> Paso 2 */
+  function fm(t){$("formMsg").textContent=t}
+  function refreshPay(){
+    st.resumen=desc(cur.dates);
+    var s=st.resumen;
+    if(isPack()){s+=". Fechas: "+listDates(cur.dates,12)}
+    $("paySummary").textContent=s;
+    $("payTotal").textContent=totalText(cur.dates);
+    showInfo();
+  }
+  function openPay(){
+    var server=!!SUBMIT_URL;
+    $("payStep").hidden=false;setStep(2);
+    var hi=$("holdInfo");
+    if(server&&st.hold){
+      var v=st.hold.vence?new Date(st.hold.vence):null;
+      hi.textContent="Tu código es "+st.hold.codigo+". Tu horario está apartado"+(v&&!isNaN(v)?" hasta el "+v.toLocaleString("es",{weekday:"long",day:"numeric",month:"long",hour:"numeric",minute:"2-digit"}):"")+". Guarda tu código por si necesitas escribirnos.";
+    }else{hi.textContent=""}
+    $("changeBtn").hidden=!(server&&st.hold);
+    $("shotBox").hidden=!server;
+    $("shotHint").textContent=server?"Tapa los datos que no sean la referencia, el monto y la fecha. Con tu comprobante hacemos la preconciliación. Luego el administrador concilia el pago y te confirma la reserva.":"Cuando envíes tu reserva se abrirá WhatsApp. Adjunta ahí tu captura o comprobante.";
+    methodButtons();refreshPay();
+    $("payStep").scrollIntoView({behavior:"smooth"});
+  }
+  $("changeBtn").onclick=function(){
+    var h=st.hold;if(!h)return;
+    var done=function(){st.hold=null;setLocked(false);$("payStep").hidden=true;setStep(1);fm("Puedes cambiar tu reserva.");update()};
+    post({accion:"liberar",codigo:h.codigo,telefono:st.tel}).then(done).catch(done);
+  };
+  $("goPay").onclick=function(){
+    fm("");
+    if(!cur.ok||locked()){return}
+    if($("web").value){return}
+    var nombre=$("nombre").value.trim(),tel=normTel($("tel").value);
+    if(nombre.length<2){return fm("Escribe tu nombre.")}
+    if(tel.length<10||tel.length>15){return fm("Revisa tu teléfono (ej.: 0424 1234567).")}
+    if(!$("acepto").checked){return fm("Para continuar, acepta la política de cancelación y el aviso de privacidad.")}
+    st.tel=tel;st.nombre=nombre;st.resumen=desc(cur.dates);
+    if(!SUBMIT_URL){openPay();return}
+    var btn=$("goPay"),label=btn.textContent;btn.disabled=true;btn.textContent="Apartando tu horario…";
+    post({accion:"reservar",espacio:st.space,deporte:st.sport,actividad:st.act.id,fechas:cur.dates.map(iso),desde:$("from").value,hasta:$("to").value,
+      equipos:st.act.type==="team"?+$("teams").value:null,descripcion:$("desc").value.trim(),nombre:nombre,telefono:tel,acepta:true,web:""})
+    .then(function(r){
+      if(r&&r.ok){st.hold=r;setLocked(true);fm("Horario apartado con el código "+r.codigo+".");openPay();return}
+      if(r&&r.error==="ocupado"){if(r.ocupado){remote=r.ocupado}fm(r.mensaje||"Ese horario acaba de ser tomado por otra persona. Elige otro.");update();return}
+      fm(ERR[r&&r.error]||"No pudimos apartar tu horario. Inténtalo otra vez.");
+    })
+    .catch(function(){fm("No pudimos conectar. Inténtalo otra vez en un momento.")})
+    .then(function(){btn.textContent=label;btn.disabled=!cur.ok||locked()});
+  };
+
+  function setStatus(text,link){
+    var s=$("status");s.textContent=text;
+    if(link){var a=document.createElement("a");a.href=link;a.target="_blank";a.rel="noopener";a.textContent=" Escribir por WhatsApp";s.appendChild(a)}
+  }
+  function readCapture(file){
+    return new Promise(function(res,rej){
+      var t=file.type||"";
+      if(t==="application/pdf"){
+        if(file.size>2000000){return rej(ue("El PDF pesa más de 2 MB. Envía una captura de pantalla."))}
+        var r=new FileReader();
+        r.onload=function(){res({nombre:"comprobante.pdf",tipo:t,data:String(r.result).split(",")[1]||""})};
+        r.onerror=function(){rej(ue("No pudimos leer el archivo."))};
+        r.readAsDataURL(file);return;
+      }
+      if(t.indexOf("image/")!==0){return rej(ue("Adjunta una imagen o un PDF."))}
+      var url=URL.createObjectURL(file),img=new Image();
+      img.onload=function(){
+        var s=Math.min(1,1400/Math.max(img.width,img.height)),c=document.createElement("canvas");
+        c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);
+        c.getContext("2d").drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);
+        res({nombre:"comprobante.jpg",tipo:"image/jpeg",data:c.toDataURL("image/jpeg",.72).split(",")[1]});
+      };
+      img.onerror=function(){URL.revokeObjectURL(url);rej(ue("No pudimos leer la imagen."))};
+      img.src=url;
+    });
+  }
+  $("submit").onclick=function(){
+    var ref=$("ref").value.trim();
+    if(!cur.ok&&!st.hold){setStatus("Revisa tu reserva antes de enviarla.");return}
+    if(!st.method){setStatus("Elige cómo vas a pagar.");return}
+    if(!SUBMIT_URL){
+      var nombre=$("nombre").value.trim(),tel=$("tel").value.trim();
+      var msg="Hola, quiero reservar:\n"+desc(cur.dates)+(isPack()?"\nFechas: "+listDates(cur.dates,40):"")+"\nQué van a hacer: "+($("desc").value.trim()||"—")+"\nTotal: "+totalText(cur.dates)+"\nForma de pago: "+st.method.label+(ref?"\nReferencia: "+ref:"")+"\nNombre: "+nombre+"\nTeléfono: "+tel+"\nTe envío mi comprobante por aquí.";
+      window.open(waLink(msg),"_blank","noopener");
+      setStatus("Se abrió WhatsApp con tu reserva. Envía ahí tu captura o comprobante. Tu horario queda confirmado cuando te escribamos.");return;
+    }
+    if(ref.length<3){setStatus("Escribe el número de referencia o de recibo.");return}
+    var file=$("shot").files[0];
+    if(!file){setStatus("Adjunta la captura o foto de tu comprobante.");return}
+    var btn=$("submit");btn.disabled=true;setStatus("Enviando tu comprobante…");
+    readCapture(file).then(function(cap){
+      return post({accion:"pagar",codigo:st.hold.codigo,telefono:st.tel,metodo:st.method.id,referencia:ref,captura:cap});
+    }).then(function(r){
+      if(r&&r.ok){
+        setStatus("¡Listo! Recibimos tu pago (código "+st.hold.codigo+"). El administrador lo concilia y te confirma por WhatsApp. Una transferencia puede tardar hasta 48 horas.");
+        btn.hidden=true;$("changeBtn").hidden=true;return;
+      }
+      setStatus(ERR[r&&r.error]||"No pudimos registrar tu pago. Inténtalo otra vez.");
+    }).catch(function(e){
+      setStatus(e&&e.user?e.message:"No pudimos enviarlo desde aquí. Inténtalo otra vez en un momento.");
+    }).then(function(){btn.disabled=false});
+  };
+
+  /* Formulario corto (inscribirse a un evento o promocionar uno), sin salir a WhatsApp */
+  function miniForm(tipo,evento,conTexto,boton){
+    var f=el("div","evform"),nom=document.createElement("input"),tel=document.createElement("input"),txt=document.createElement("textarea"),hp=document.createElement("input");
+    function lab(t,inp){var l=el("label","",t);l.appendChild(inp);return l}
+    nom.autocomplete="name";nom.maxLength=80;tel.type="tel";tel.inputMode="tel";tel.maxLength=20;tel.placeholder="0424 1234567";tel.autocomplete="tel";
+    txt.maxLength=400;txt.placeholder="Cuéntanos de qué trata el evento, fecha y lugar";
+    f.appendChild(lab("Tu nombre",nom));f.appendChild(lab("Tu teléfono (WhatsApp)",tel));
+    if(conTexto){f.appendChild(lab("Cuéntanos del evento",txt))}
+    var h=el("div","hp");h.setAttribute("aria-hidden","true");hp.tabIndex=-1;hp.autocomplete="off";h.appendChild(hp);f.appendChild(h);
+    var fine=el("p","fine","Usamos tu nombre y teléfono solo para contactarte. ");
+    var a=el("a","","Aviso de privacidad");a.href="#reglas";a.setAttribute("data-open","det-priv");a.style.color="var(--accent)";fine.appendChild(a);f.appendChild(fine);
+    var send=el("button","btn sm",boton);send.type="button";f.appendChild(send);
+    var msg=el("p","msg");msg.setAttribute("role","status");f.appendChild(msg);
+    send.onclick=function(){
+      msg.textContent="";msg.style.color="var(--warn)";
+      var n=nom.value.trim(),t=normTel(tel.value);
+      if(n.length<2){msg.textContent="Escribe tu nombre.";return}
+      if(t.length<10||t.length>15){msg.textContent="Revisa tu teléfono.";return}
+      if(conTexto&&txt.value.trim().length<5){msg.textContent="Cuéntanos de qué trata el evento.";return}
+      if(hp.value){return}
+      if(!SUBMIT_URL){
+        msg.textContent="El envío en línea aún no está activo. Puedes escribirnos al "+TEL_TXT+". ";
+        var w=el("a","","Abrir WhatsApp");w.href=waLink("");w.target="_blank";w.rel="noopener";msg.appendChild(w);return;
+      }
+      send.disabled=true;msg.style.color="var(--accent)";msg.textContent="Enviando…";
+      post({accion:"mensaje",tipo:tipo,evento:evento,nombre:n,telefono:t,texto:txt.value.trim(),web:""}).then(function(r){
+        if(r&&r.ok){msg.textContent="¡Listo! Recibimos tu solicitud y te contactaremos al número que dejaste.";send.hidden=true;return}
+        msg.style.color="var(--warn)";msg.textContent=ERR[r&&r.error]||"No pudimos enviarlo. Inténtalo otra vez.";send.disabled=false;
+      }).catch(function(){msg.style.color="var(--warn)";msg.textContent="No pudimos conectar. Inténtalo otra vez en un momento.";send.disabled=false});
+    };
+    return f;
+  }
+
+  /* Eventos */
+  function gcal(e){
+    var d=e.fecha.replace(/-/g,""),sp=SPACES[e.espacio]?SPACES[e.espacio].name:"",
+        base="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(e.titulo)+"&location="+encodeURIComponent("Polideportivo Alejandro Carrasquel"+(sp?" — "+sp:""));
+    if(e.desde&&e.hasta){return base+"&dates="+d+"T"+e.desde.replace(":","")+"00/"+d+"T"+e.hasta.replace(":","")+"00&ctz=America/Caracas"}
+    var n=parseISO(e.fecha);n.setDate(n.getDate()+1);
+    return base+"&dates="+d+"/"+iso(n).replace(/-/g,"");
+  }
+  (function(){
+    var box=$("events"),up=EVENTS.filter(function(e){return e.fecha&&e.titulo&&parseISO(e.fecha)>=today}).sort(function(a,b){return a.fecha<b.fecha?-1:a.fecha>b.fecha?1:0});
+    $("evEmpty").hidden=up.length>0;
+    up.forEach(function(e,i){
+      var d=parseISO(e.fecha),card=el("article","event"+(i===0?" next":""));
+      var dt=el("div","ev-date");dt.appendChild(el("b","",d.getDate()));dt.appendChild(el("span","",d.toLocaleDateString("es",{month:"short"}).replace(".","")));
+      var body=document.createElement("div"),tg=el("div","tags");
+      if(e.deporte){tg.appendChild(el("span","tag",e.deporte))}
+      if(i===0){tg.appendChild(el("span","tag","Próximo"))}
+      body.appendChild(tg);body.appendChild(el("h3","",e.titulo));
+      var sp=SPACES[e.espacio]?SPACES[e.espacio].name:"",hora=e.desde?(f12(e.desde)+(e.hasta?" a "+f12(e.hasta):"")):"";
+      body.appendChild(el("p","when",d.toLocaleDateString("es",{weekday:"long",day:"numeric",month:"long"})+(hora?" · "+hora:"")));
+      if(sp){body.appendChild(el("p","","Lugar: "+sp))}
+      if(e.detalle){body.appendChild(el("p","",e.detalle))}
+      var n=Math.round((d-today)/864e5);
+      body.appendChild(el("p","left",n===0?"Es hoy":n===1?"Es mañana":"Faltan "+n+" días"));
+      var ac=el("div","ev-actions"),form=null;
+      if(e.inscripcion!==false){
+        var p=el("button","btn sm","Quiero participar");p.type="button";p.setAttribute("aria-expanded","false");
+        p.onclick=function(){
+          if(!form){form=miniForm("inscripcion",e.titulo+" ("+e.fecha+")",false,"Anotarme");body.appendChild(form);p.setAttribute("aria-expanded","true");return}
+          form.hidden=!form.hidden;p.setAttribute("aria-expanded",String(!form.hidden));
+        };
+        ac.appendChild(p);
+      }
+      var g=el("a","btn sm ghost","Añadir a mi calendario");g.target="_blank";g.rel="noopener";g.href=gcal(e);ac.appendChild(g);
+      body.appendChild(ac);card.appendChild(dt);card.appendChild(body);box.appendChild(card);
+    });
+    var askForm=null;
+    $("evAsk").onclick=function(){
+      if(!askForm){askForm=miniForm("promocion","",true,"Enviar");$("askBox").appendChild(askForm);return}
+      askForm.hidden=!askForm.hidden;
+    };
+  })();
+
+  /* Resultados por categoría */
+  // CATEGORÍAS y colores. Las ilustraciones (ILLUS) son direcciones de imagen: png, svg, gif, webp, video webm/mp4 o animación Lottie (.json)
+  var CATS=[{k:"sala",n:"Fútbol sala",c:"#c9b6f5"},{k:"futbol",n:"Fútbol",c:"#f7d98b"},{k:"voley",n:"Voleibol",c:"#a9d8f5"},{k:"basquet",n:"Básquet",c:"#f5b8c8"},{k:"atletismo",n:"Atletismo",c:"#8fe3b8"},{k:"entrenamiento",n:"Entrenamiento",c:"#f5c9a8"},{k:"yoga",n:"Yoga",c:"#b9e6a8"}];
+  var ILLUS_BASE="https://raw.githubusercontent.com/dileny-star/DeportistasWeb/main/";
+  var ART="deportistas01_Artboard";   // nombre común de tus archivos
+  // Si una ilustración no corresponde al deporte, cambia el número (1 al 7) de esa línea:
+  var ILLUS={atletismo:ILLUS_BASE+ART+"1.svg",voley:ILLUS_BASE+ART+"2.svg",sala:ILLUS_BASE+ART+"3.svg",futbol:ILLUS_BASE+ART+"4.svg",entrenamiento:ILLUS_BASE+ART+"5.svg",basquet:ILLUS_BASE+ART+"7.svg",yoga:ILLUS_BASE+ART+"6.svg"};
+  // RESULTADOS escritos aquí (o, mejor, en la hoja "Resultados" del script). cat: sala | futbol | voley | basquet | atletismo
+  // Partido: {cat,rama,comp,fecha,fase,a,pa,b,pb}. Carrera o ranking: deja b y pb vacíos y usa a=atleta o equipo, pa=marca, fase="1.º · 100 m"
+  // Publica nombres de equipos, clubes o personas adultas. No publiques nombres de menores de edad.
+  var RESULTS=[];
+  var DEMO_RESULTS=true;   // muestra resultados de ejemplo mientras no haya reales. Ponlo en false antes de publicar
+  var rs={cat:null,rama:"",rows:null,shown:12,demo:false,lottie:false};
+  function norm(s){return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim()}
+  function catOf(s){
+    var n=norm(s),al={"futbol sala":"sala","voleibol":"voley","volleyball":"voley","baloncesto":"basquet","basket":"basquet"};
+    if(al[n]){n=al[n]}
+    for(var i=0;i<CATS.length;i++){if(CATS[i].k===n||norm(CATS[i].n)===n){return CATS[i]}}
+    return null;
+  }
+  function demoRows(){
+    var d=iso(today);
+    return [
+      {cat:"sala",rama:"Masculino",comp:"Torneo de ejemplo",fecha:d,fase:"Semifinal",a:"Equipo A",pa:"3",b:"Equipo B",pb:"1"},
+      {cat:"sala",rama:"Masculino",comp:"Torneo de ejemplo",fecha:d,fase:"Semifinal",a:"Equipo C",pa:"2",b:"Equipo D",pb:"4"},
+      {cat:"sala",rama:"Femenino",comp:"Torneo de ejemplo",fecha:d,fase:"Final",a:"Equipo E",pa:"1",b:"Equipo F",pb:"0"},
+      {cat:"voley",rama:"Mixto",comp:"Liga de ejemplo",fecha:d,fase:"Jornada 1",a:"Equipo G",pa:"3",b:"Equipo H",pb:"2"},
+      {cat:"basquet",rama:"Masculino",comp:"Copa de ejemplo",fecha:d,fase:"Final",a:"Equipo I",pa:"58",b:"Equipo J",pb:"61"},
+      {cat:"futbol",rama:"Masculino",comp:"Liga de ejemplo",fecha:d,fase:"Jornada 3",a:"Equipo K",pa:"2",b:"Equipo L",pb:"2"},
+      {cat:"atletismo",rama:"Femenino",comp:"Competencia de ejemplo",fecha:d,fase:"1.º · 100 m",a:"Atleta 1",pa:"12.4 s"},
+      {cat:"atletismo",rama:"Femenino",comp:"Competencia de ejemplo",fecha:d,fase:"2.º · 100 m",a:"Atleta 2",pa:"12.7 s"}
+    ];
+  }
+  function mediaFor(box,url,name,color){
+    box.innerHTML="";box.style.background=color;
+    if(!url){box.appendChild(el("div","big",name));return}
+    var ext=url.split("?")[0].split(".").pop().toLowerCase();
+    if(ext==="webm"||ext==="mp4"){
+      var v=document.createElement("video");v.src=url;v.autoplay=true;v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute("aria-hidden","true");box.appendChild(v);
+    }else if(ext==="json"){
+      var h=el("div","lot");box.appendChild(h);
+      var go=function(){window.lottie.loadAnimation({container:h,renderer:"svg",loop:true,autoplay:true,path:url})};
+      if(window.lottie){go()}else{var sc=document.createElement("script");sc.src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js";sc.onload=go;document.head.appendChild(sc)}
+    }else{
+      var im=document.createElement("img");im.src=url;im.alt="";im.loading="lazy";box.appendChild(im);
+    }
+  }
+  function renderResults(){
+    var rows=rs.rows&&rs.rows.length?rs.rows:RESULTS;rs.demo=false;
+    if(!rows.length&&DEMO_RESULTS){rows=demoRows();rs.demo=true}
+    rows=rows.map(function(r){var c=catOf(r.cat);return c?{c:c,rama:r.rama||"",comp:r.comp||"",fecha:r.fecha||"",fase:r.fase||"",a:r.a||"",pa:r.pa==null?"":String(r.pa),b:r.b||"",pb:r.pb==null?"":String(r.pb)}:null}).filter(Boolean);
+    rows.sort(function(x,y){return x.fecha<y.fecha?1:x.fecha>y.fecha?-1:0});
+    $("rsDemo").hidden=!rs.demo;
+    var cats=CATS.filter(function(c){return rows.some(function(r){return r.c===c})});
+    $("rsEmpty").hidden=cats.length>0;$("rpanel").hidden=!cats.length;$("rtabs").hidden=!cats.length;
+    if(!cats.length){$("ticker").hidden=true;return}
+    // cinta con los últimos resultados
+    var tk=$("tk");tk.innerHTML="";
+    rows.slice(0,10).forEach(function(r){
+      var t=el("span","");t.appendChild(el("b","",r.c.n));
+      t.appendChild(document.createTextNode(" "+r.a+(r.b?" "+r.pa+" – "+r.pb+" "+r.b:" "+r.pa)));
+      tk.appendChild(t);tk.appendChild(el("i","","•"));
+    });
+    $("ticker").hidden=false;
+    if(!rs.cat||cats.indexOf(rs.cat)<0){rs.cat=cats[0];rs.rama="";rs.shown=12}
+    var tb=$("rtabs");tb.innerHTML="";
+    cats.forEach(function(c){
+      var b=el("button","rtab",c.n);b.type="button";b.style.background=c.c;b.setAttribute("aria-pressed",c===rs.cat);
+      b.onclick=function(){rs.cat=c;rs.rama="";rs.shown=12;rs.anim=true;renderResults()};tb.appendChild(b);
+    });
+    var mine=rows.filter(function(r){return r.c===rs.cat});
+    mediaFor($("rart"),ILLUS[rs.cat.k],rs.cat.n,rs.cat.c);
+    var ramas=[];mine.forEach(function(r){if(r.rama&&ramas.indexOf(r.rama)<0){ramas.push(r.rama)}});
+    var rb=$("rrama");rb.innerHTML="";rb.hidden=ramas.length<2;
+    if(ramas.length>1){
+      ["Todos"].concat(ramas).forEach(function(x){
+        var b=el("button","tag",x);b.type="button";b.setAttribute("aria-pressed",(x==="Todos"&&!rs.rama)||x===rs.rama);
+        b.onclick=function(){rs.rama=x==="Todos"?"":x;rs.shown=12;renderResults()};rb.appendChild(b);
+      });
+    }
+    if(rs.rama){mine=mine.filter(function(r){return r.rama===rs.rama})}
+    var list=$("rlist");list.innerHTML="";
+    var groups=[],gi={};
+    mine.slice(0,rs.shown).forEach(function(r){
+      var k=r.comp+"|"+r.fecha+"|"+(rs.rama?"":r.rama);
+      if(!(k in gi)){gi[k]=groups.length;groups.push({t:r.comp+(r.rama&&!rs.rama?" · "+r.rama:"")+(r.fecha?" · "+parseISO(r.fecha).toLocaleDateString("es",{day:"numeric",month:"short"}):""),rows:[]})}
+      groups[gi[k]].rows.push(r);
+    });
+    groups.forEach(function(g){
+      var gd=el("div","rgroup");gd.appendChild(el("h3","",g.t));var ul=el("ul","rlist");
+      g.rows.forEach(function(r){
+        var li=el("li","rrow"+(r.b?"":" rank"));
+        if(r.fase){li.appendChild(el("span","fase",r.fase))}
+        if(r.b){
+          var x=parseFloat(r.pa),y=parseFloat(r.pb),wa=!isNaN(x)&&!isNaN(y)&&x>y,wb=!isNaN(x)&&!isNaN(y)&&y>x;
+          li.appendChild(el("span","a"+(wa?" w":""),r.a));li.appendChild(el("b","sc",r.pa+" – "+r.pb));li.appendChild(el("span","b"+(wb?" w":""),r.b));
+        }else{li.appendChild(el("span","",r.a));li.appendChild(el("b","sc",r.pa))}
+        ul.appendChild(li);
+      });
+      gd.appendChild(ul);list.appendChild(gd);
+    });
+    if(rs.anim){var pn=$("rpanel");pn.classList.remove("swap");void pn.offsetWidth;pn.classList.add("swap");rs.anim=false}
+    if(mine.length>rs.shown){var m=el("button","btn sm ghost rmore","Ver más resultados");m.type="button";m.onclick=function(){rs.shown+=12;renderResults()};list.appendChild(m)}
+  }
+  function loadResults(){
+    renderResults();
+    if(!SUBMIT_URL){return}
+    fetch(SUBMIT_URL+"?accion=resultados").then(function(r){return r.json()}).then(function(j){if(Array.isArray(j)){rs.rows=j.map(function(r){return {cat:r.categoria,rama:r.rama,comp:r.competencia,fecha:r.fecha,fase:r.fase,a:r.a,pa:r.pa,b:r.b,pb:r.pb}});renderResults()}}).catch(function(){});
+  }
+
+  /* Entrenadores */
+  (function(){
+    var list=TRAINERS.filter(function(t){return t.nombre&&t.nombre.trim()});
+    if(!list.length){return}
+    $("entrenadores").hidden=false;$("navEnt").hidden=false;
+    var all=[];list.forEach(function(t){(t.esp||[]).forEach(function(x){if(all.indexOf(x)<0){all.push(x)}})});
+    var sel="";
+    function draw(){
+      var box=$("trainers");box.innerHTML="";
+      list.filter(function(t){return !sel||(t.esp||[]).indexOf(sel)>-1}).forEach(function(t){
+        var c=el("article","trainer"),av=el("div","avatar");
+        if(t.foto){var im=document.createElement("img");im.src=t.foto;im.alt=t.nombre;av.appendChild(im)}
+        else{av.textContent=t.nombre.trim().split(/\s+/).slice(0,2).map(function(w){return w.charAt(0).toUpperCase()}).join("")}
+        var b=document.createElement("div");b.appendChild(el("h3","",t.nombre));
+        var tg=el("div","tags");(t.esp||[]).forEach(function(x){tg.appendChild(el("span","tag",x))});b.appendChild(tg);
+        if(t.horario){b.appendChild(el("p","",t.horario))}
+        c.appendChild(av);c.appendChild(b);box.appendChild(c);
+      });
+    }
+    var f=$("trFilter");
+    if(all.length>1){
+      ["Todos"].concat(all).forEach(function(x){
+        var b=el("button","tag",x);b.type="button";b.setAttribute("aria-pressed",x==="Todos");
+        b.onclick=function(){sel=x==="Todos"?"":x;Array.prototype.forEach.call(f.children,function(y){y.setAttribute("aria-pressed",y===b)});draw()};
+        f.appendChild(b);
+      });
+    }else{f.hidden=true}
+    draw();
+  })();
+
+  /* Memoria */
+  (function(){
+    var box=$("mem");
+    MEM_TEXTOS.forEach(function(m){
+      var c=el("article","card");
+      if(m.foto){var f=document.createElement("figure"),im=document.createElement("img");im.src=m.foto;im.alt=m.titulo;f.appendChild(im);if(m.pie){f.appendChild(el("figcaption","",m.pie))}c.appendChild(f)}
+      c.appendChild(el("h3","",m.titulo));c.appendChild(el("p","",m.texto));box.appendChild(c);
+    });
+    MEM_FOTOS.forEach(function(p){
+      if(!p.src){return}
+      var c=el("article","card"),f=document.createElement("figure"),im=document.createElement("img");im.src=p.src;im.alt=p.pie||"Foto del polideportivo";f.appendChild(im);if(p.pie){f.appendChild(el("figcaption","",p.pie))}c.appendChild(f);box.appendChild(c);
+    });
+    var call=el("article","card call");call.appendChild(el("h3","","¿Tienes una foto o un recuerdo?"));
+    call.appendChild(el("p","","Cuéntanos qué se vivió en el polideportivo y envíanos tus fotos de torneos, juegos y entrenamientos."));
+    var form=null,b=el("button","btn sm","Quiero compartirla");b.type="button";
+    b.onclick=function(){
+      if(!form){form=miniForm("memoria","",true,"Enviar");form.querySelector("textarea").placeholder="Cuéntanos qué foto o recuerdo quieres compartir. Autorizas su publicación (sin menores de edad).";call.appendChild(form);return}
+      form.hidden=!form.hidden;
+    };
+    call.appendChild(b);box.appendChild(call);
+  })();
+
+  fillFrom();fillTo();loadBusy();loadResults();
+})();
+</script>
+</body>
+</html>
