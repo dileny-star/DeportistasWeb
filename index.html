@@ -956,7 +956,7 @@ footer a{color:var(--text)}
         if(cap){body.flyer=cap}
         return post(body);
       }).then(function(r){
-        if(r&&r.ok){send.hidden=true;msg.textContent="";f.appendChild(opts.done?opts.done(n):el("p","msg","¡Listo! Recibimos tu solicitud y te contactaremos al número que dejaste."));return}
+        if(r&&r.ok){send.hidden=true;msg.textContent="";f.appendChild(opts.done?opts.done(n,t,txt.value.trim()):el("p","msg","¡Listo! Recibimos tu solicitud y te contactaremos al número que dejaste."));return}
         msg.style.color="var(--warn)";msg.textContent=ERR[r&&r.error]||"No pudimos enviarlo. Inténtalo otra vez.";send.disabled=false;
       }).catch(function(e){msg.style.color="var(--warn)";msg.textContent=(e&&e.user)?e.message:"No pudimos conectar. Inténtalo otra vez en un momento.";send.disabled=false});
     };
@@ -973,15 +973,20 @@ footer a{color:var(--text)}
     return box;
   }
 
-  /* Después de pedir promocionar un evento: reservar el espacio */
-  function promoNext(nombre){
-    var box=el("div","evpay");
-    box.appendChild(el("p","msg","¡Listo, "+nombre.split(" ")[0]+"! Recibimos tu solicitud."));
-    box.appendChild(el("p","hint","Los eventos se aprueban caso por caso. Para asegurar la fecha, reserva el espacio como \"Evento o torneo\": la tarifa se confirma con el administrador. Si tienes tu flyer, puedes enviarlo también por WhatsApp."));
-    var r=el("a","btn sm","Reservar el espacio");r.href="#espacios";r.style.marginRight=".5rem";
-    r.addEventListener("click",function(ev){ev.preventDefault();choose("sala");st.act=SPORTS.sala.types.filter(function(a){return a.type==="tbd"})[0];render()});
-    box.appendChild(r);
-    var w=el("a","btn sm ghost","Escribir por WhatsApp");w.target="_blank";w.rel="noopener";w.href=waLink("Hola, soy "+nombre+". Acabo de pedir promocionar un evento y quiero reservar el espacio.");box.appendChild(w);
+  /* Después de pedir promocionar un evento: te lleva directo a reservar el espacio */
+  function promoNext(nombre,tel,texto){
+    var box=el("div","evpay"),went=false;
+    function go(){
+      if(went){return}went=true;
+      choose("sala");
+      st.act=SPORTS.sala.types.filter(function(a){return a.type==="tbd"})[0];
+      $("nombre").value=nombre;$("tel").value=tel;if(texto){$("desc").value=texto.slice(0,300)}
+      render();
+    }
+    box.appendChild(el("p","msg","¡Listo, "+nombre.split(" ")[0]+"! Recibimos tu solicitud. Te llevamos a reservar el espacio…"));
+    box.appendChild(el("p","hint","Elige el deporte o espacio y el día. Los eventos se aprueban caso por caso y la tarifa se confirma con el administrador. Tus datos ya están cargados."));
+    var r=el("button","btn sm","Reservar el espacio ahora");r.type="button";r.onclick=go;box.appendChild(r);
+    setTimeout(go,1800);
     return box;
   }
 
