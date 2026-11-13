@@ -52,9 +52,7 @@ nav a:hover{color:var(--text)}
 .track .lane{fill:none;stroke:var(--line);stroke-width:2}
 .track .lane.main{stroke:var(--accent);stroke-opacity:.55}
 .track .pitch{fill:none;stroke:var(--line);stroke-width:1.5}
-.runner{fill:var(--accent);filter:drop-shadow(0 0 8px var(--accent));animation:run 9s linear infinite}
-.track .runner{offset-path:path("M130 40 H270 A80 80 0 0 1 270 200 H130 A80 80 0 0 1 130 40 Z")}
-@keyframes run{to{offset-distance:100%}}
+.runner{fill:var(--accent);filter:drop-shadow(0 0 8px var(--accent))}
 
 .tags{display:flex;flex-wrap:wrap;gap:.35rem;margin:0 0 .8rem}
 .tag{font-size:.8rem;border:1px solid var(--line);border-radius:999px;padding:.1rem .65rem;color:var(--accent);background:transparent;line-height:1.6;font-family:var(--body)}
@@ -85,9 +83,9 @@ button.tag[aria-pressed="true"]{background:var(--accent);color:#031218;border-co
 @keyframes roll{from{transform:translateX(0)}to{transform:translateX(100px)}}
 .spin{transform-box:fill-box;transform-origin:center;animation:spin 3.4s ease-in-out infinite alternate}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(820deg)}}
-.art .runner{fill:var(--ac);filter:none;offset-path:path("M57 20 H143 A35 35 0 0 1 143 90 H57 A35 35 0 0 1 57 20 Z");animation-duration:6s}
+.art .runner{fill:var(--ac);filter:none}
 /* Solo se detiene el punto grande del inicio. Los balones de las canchas son pequeños y se mantienen en movimiento. */
-@media(prefers-reduced-motion:reduce){.track .runner{animation:none;offset-distance:20%}html{scroll-behavior:auto}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
 /* Eventos */
 .events{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1rem;margin-top:2rem}
@@ -113,25 +111,18 @@ button.tag[aria-pressed="true"]{background:var(--accent);color:#031218;border-co
 .empty p{margin:0}
 
 /* Resultados */
-.ticker{overflow:hidden;white-space:nowrap;border-block:1px solid var(--line);margin:1.5rem 0 0;padding:.7rem 0;font:500 1rem var(--display);color:var(--muted)}
-.ticker .tk{display:inline-block;padding-left:100%;animation:tick 45s linear infinite}
-.ticker b{color:var(--accent);font-weight:500}
-.ticker i{font-style:normal;color:var(--line);padding:0 .9rem}
-@keyframes tick{to{transform:translateX(-100%)}}
-@media(prefers-reduced-motion:reduce){.ticker{white-space:normal}.ticker .tk{animation:none;padding-left:0}}
-.rtabs{display:flex;gap:.6rem;overflow-x:auto;padding:1.2rem .2rem .6rem;-webkit-overflow-scrolling:touch}
-.rtab{flex:none;border:0;border-radius:16px;padding:.7rem 1.2rem;font:500 1rem var(--display);color:#06141c;cursor:pointer;min-height:44px;opacity:.6}
-.rtab[aria-pressed="true"]{opacity:1;box-shadow:0 0 0 2px var(--text)}
-.rpanel{display:grid;grid-template-columns:.85fr 1.15fr;gap:1rem;margin-top:.6rem}
-@media(max-width:800px){.rpanel{grid-template-columns:1fr}}
-.rart{border-radius:18px;min-height:220px;display:grid;place-items:center;overflow:hidden;padding:1rem}
-.rart img,.rart video,.rart .lot{display:block;width:100%;max-width:340px;max-height:320px;object-fit:contain;animation:floaty 5s ease-in-out infinite}
-.rart .big{font:700 clamp(2rem,9vw,3.4rem)/1 var(--display);color:#06141c;opacity:.85;text-align:center}
+.rtabs{display:flex;gap:1rem;overflow-x:auto;padding:1.2rem .2rem .8rem;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.rcat{flex:0 0 min(78%,300px);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);cursor:pointer;padding:.3rem .3rem .7rem;text-align:center;font:500 1.1rem var(--display);opacity:.8;scroll-snap-align:center;-webkit-tap-highlight-color:transparent}
+.rcat .rim{display:grid;place-items:center;height:300px;margin-bottom:.5rem}
+.rcat .rim img,.rcat .rim video,.rcat .rim .lot{display:block;width:100%;height:100%;max-width:300px;max-height:300px;object-fit:contain;animation:floaty 5s ease-in-out infinite}
+.rcat:nth-child(even) .rim img,.rcat:nth-child(even) .rim video{animation-delay:-2.5s}
+.rcat[aria-pressed="true"]{opacity:1;color:var(--text);border-bottom-color:var(--accent)}
+.rcat:hover{opacity:1}
 @keyframes floaty{50%{transform:translateY(-10px) rotate(-1.5deg)}}
-@media(prefers-reduced-motion:reduce){.rart img,.rart video,.rart .lot{animation:none}}
+.rpanel{margin-top:.4rem;scroll-margin-top:1rem}
 @keyframes swapin{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
-.rpanel.swap .rart,.rpanel.swap .rboard{animation:swapin .45s ease both}
-@media(prefers-reduced-motion:reduce){.rpanel.swap .rart,.rpanel.swap .rboard{animation:none}}
+.rpanel.swap .rboard{animation:swapin .45s ease both}
+@media(prefers-reduced-motion:reduce){.rpanel.swap .rboard{animation:none}}
 .rboard{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1rem 1.2rem}
 .rboard .tags{margin-bottom:.2rem}
 .rgroup h3{font-size:.95rem;color:var(--muted);font-weight:500;margin:1rem 0 .2rem}
@@ -221,15 +212,6 @@ select{appearance:auto}
 #status a{text-decoration:underline}
 .linkbtn{background:none;border:0;color:var(--accent);font:400 .9rem var(--body);text-decoration:underline;cursor:pointer;padding:.6rem 0;min-height:44px}
 
-/* Memoria */
-.mem{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1rem;margin-top:2rem}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.3rem}
-.card h3{font-size:1.2rem;margin-bottom:.5rem}
-.card p{color:var(--muted);margin:0 0 .8rem;font-size:.95rem}
-.card.call{border-style:dashed}
-.card figure{margin:0}
-.card img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;margin-bottom:.6rem}
-.card figcaption{font-size:.9rem;color:var(--muted)}
 .fine{font-size:.8rem;color:var(--muted);margin-top:1.2rem}
 
 /* Reglas */
@@ -259,7 +241,7 @@ footer a{color:var(--text)}
 <div class="wrap">
   <header class="nav">
     <a class="brand" href="#inicio">Polideportivo <span>Alejandro Carrasquel</span></a>
-    <nav><a href="#espacios">Reservar</a><a href="#eventos">Eventos</a><a class="hide" href="#resultados">Resultados</a><a class="hide" id="navEnt" href="#entrenadores" hidden>Entrenadores</a><a class="hide" href="#memoria">Memoria</a><a class="hide" href="#reglas">Reglas</a></nav>
+    <nav><a href="#espacios">Reservar</a><a href="#eventos">Eventos</a><a class="hide" href="#resultados">Resultados</a><a class="hide" id="navEnt" href="#entrenadores" hidden>Entrenadores</a><a class="hide" href="#reglas">Reglas</a></nav>
   </header>
 
   <main id="inicio">
@@ -276,7 +258,7 @@ footer a{color:var(--text)}
         <rect class="pitch" x="130" y="80" width="140" height="80" rx="4"/>
         <line class="pitch" x1="200" y1="80" x2="200" y2="160"/>
         <circle class="pitch" cx="200" cy="120" r="14"/>
-        <circle class="runner" r="6"/>
+        <circle class="runner" r="6"><animateMotion dur="9s" repeatCount="indefinite" calcMode="linear" path="M130 40 H270 A80 80 0 0 1 270 200 H130 A80 80 0 0 1 130 40 Z"/></circle>
       </svg>
     </div>
   </main>
@@ -294,7 +276,7 @@ footer a{color:var(--text)}
         <div class="info"><h3>Campo de fútbol</h3><div class="tags"><button type="button" class="tag" data-sport="futbol">Fútbol</button></div><p>Para partidos, torneos y entrenamientos.</p><button type="button" class="btn sm go">Reservar aquí</button></div>
       </article>
       <article class="space" data-space="pista">
-        <div class="art"><svg viewBox="0 0 200 110" aria-hidden="true"><rect x="10" y="8" width="180" height="94" rx="47"/><rect x="22" y="20" width="156" height="70" rx="35"/><rect x="34" y="32" width="132" height="46" rx="23"/><circle class="runner" r="5"/></svg></div>
+        <div class="art"><svg viewBox="0 0 200 110" aria-hidden="true"><rect x="10" y="8" width="180" height="94" rx="47"/><rect x="22" y="20" width="156" height="70" rx="35"/><rect x="34" y="32" width="132" height="46" rx="23"/><circle class="runner" r="5"><animateMotion dur="6s" repeatCount="indefinite" calcMode="linear" path="M57 20 H143 A35 35 0 0 1 143 90 H57 A35 35 0 0 1 57 20 Z"/></circle></svg></div>
         <div class="info"><h3>Pista de atletismo</h3><div class="tags"><button type="button" class="tag" data-sport="atletismo">Atletismo</button></div><p>Para clubes, entrenamientos y eventos de carrera.</p><button type="button" class="btn sm go">Reservar aquí</button></div>
       </article>
     </div>
@@ -317,9 +299,9 @@ footer a{color:var(--text)}
 
       <div class="cal" id="calBox">
         <div class="cal-head">
-          <button class="icon" id="prev" aria-label="Mes anterior">&#8249;</button>
+          <button class="icon" id="prev" aria-label="Mes anterior">‹</button>
           <strong id="monthLabel"></strong>
-          <button class="icon" id="next" aria-label="Mes siguiente">&#8250;</button>
+          <button class="icon" id="next" aria-label="Mes siguiente">›</button>
         </div>
         <div class="grid" id="grid"></div>
         <p class="legend"><span><i class="l1"></i>Tu reserva</span><span><i class="l2"></i>Ocupado en tu horario</span><span><i class="l3"></i>Hay horas reservadas</span></p>
@@ -381,10 +363,8 @@ footer a{color:var(--text)}
     <h2>Resultados</h2>
     <p class="muted">Los marcadores de las competencias del polideportivo, por categoría.</p>
     <p class="note" id="rsDemo" hidden>Vista de ejemplo: estos no son resultados reales. Se ocultan solos cuando publiques los primeros.</p>
-    <div class="ticker" id="ticker" hidden><div class="tk" id="tk"></div></div>
     <div class="rtabs" id="rtabs" role="group" aria-label="Categoría"></div>
     <div class="rpanel" id="rpanel" hidden>
-      <div class="rart" id="rart"></div>
       <div class="rboard"><div class="tags" id="rrama" role="group" aria-label="Rama"></div><div id="rlist"></div></div>
     </div>
     <div class="empty" id="rsEmpty" hidden><p>Aún no hay resultados publicados. Aquí aparecerán los marcadores de torneos y competencias.</p></div>
@@ -395,13 +375,6 @@ footer a{color:var(--text)}
     <p class="muted">Profesores e instructores que acompañan a la comunidad.</p>
     <div class="tags" id="trFilter" role="group" aria-label="Filtrar por especialidad"></div>
     <div class="trainers" id="trainers"></div>
-  </section>
-
-  <section id="memoria">
-    <h2>Memoria del polideportivo</h2>
-    <p class="muted">Lo que ha pasado en estas canchas es parte de nuestra historia.</p>
-    <div class="mem" id="mem"></div>
-    <p class="fine">Publicamos solo fotos de personas adultas que lo autorizan y no publicamos fotos de menores de edad. Si apareces en una foto y quieres que la retiremos, escríbenos por WhatsApp. Esta sección es un homenaje histórico y no implica patrocinio ni respaldo de las personas mencionadas.</p>
   </section>
 
   <section id="reglas">
@@ -501,11 +474,6 @@ footer a{color:var(--text)}
     {nombre:"",foto:"",esp:["Atletismo"],horario:""},
     {nombre:"",foto:"",esp:["Yoga"],horario:""}
   ];
-  // MEMORIA: historias del polideportivo. Solo fotos de adultos con autorización.
-  var MEM_TEXTOS=[
-    {titulo:"Por aquí pasó Yulimar Rojas",texto:"La campeona olímpica de triple salto pasó por este polideportivo. Es una referencia para toda una generación y nos recuerda que de espacios como este pueden salir grandes sueños.",foto:"",pie:""}
-  ];
-  var MEM_FOTOS=[]; // {src:"dirección",pie:"Descripción y año"}
   // DATOS DE PAGO: completa todos los campos. Los vacíos se muestran como "Por configurar".
   var ACC={
     pm:{title:"Pago Móvil",rows:[["Banco",""],["Cédula o RIF",""],["Teléfono",""]]},
@@ -608,12 +576,12 @@ footer a{color:var(--text)}
   }
   Array.prototype.forEach.call(document.querySelectorAll(".space"),function(c){
     c.addEventListener("click",function(ev){
-      var t=ev.target.closest("[data-sport]");
+      var t=ev.target&&ev.target.closest?ev.target.closest("[data-sport]"):null;
       choose(t?t.getAttribute("data-sport"):SPACES[c.getAttribute("data-space")].sports[0]);
     });
   });
   document.addEventListener("click",function(ev){
-    var a=ev.target.closest("[data-open]");if(a){var d=$(a.getAttribute("data-open"));if(d){d.open=true}}
+    var a=ev.target&&ev.target.closest?ev.target.closest("[data-open]"):null;if(a){var d=$(a.getAttribute("data-open"));if(d){d.open=true}}
   });
 
   function chips(){
@@ -1057,8 +1025,8 @@ footer a{color:var(--text)}
     ];
   }
   function mediaFor(box,url,name,color){
-    box.innerHTML="";box.style.background=color;
-    if(!url){box.appendChild(el("div","big",name));return}
+    box.innerHTML="";box.style.background="none";
+    if(!url){if(name){box.appendChild(el("div","big",name))}return}
     var ext=url.split("?")[0].split(".").pop().toLowerCase();
     if(ext==="webm"||ext==="mp4"){
       var v=document.createElement("video");v.src=url;v.autoplay=true;v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute("aria-hidden","true");box.appendChild(v);
@@ -1067,7 +1035,7 @@ footer a{color:var(--text)}
       var go=function(){window.lottie.loadAnimation({container:h,renderer:"svg",loop:true,autoplay:true,path:url})};
       if(window.lottie){go()}else{var sc=document.createElement("script");sc.src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js";sc.onload=go;document.head.appendChild(sc)}
     }else{
-      var im=document.createElement("img");im.src=url;im.alt="";im.loading="lazy";box.appendChild(im);
+      var im=document.createElement("img");im.src=url;im.alt="";box.appendChild(im);
     }
   }
   function renderResults(){
@@ -1077,24 +1045,18 @@ footer a{color:var(--text)}
     rows.sort(function(x,y){return x.fecha<y.fecha?1:x.fecha>y.fecha?-1:0});
     $("rsDemo").hidden=!rs.demo;
     var cats=CATS.filter(function(c){return rows.some(function(r){return r.c===c})});
-    $("rsEmpty").hidden=cats.length>0;$("rpanel").hidden=!cats.length;$("rtabs").hidden=!cats.length;
-    if(!cats.length){$("ticker").hidden=true;return}
-    // cinta con los últimos resultados
-    var tk=$("tk");tk.innerHTML="";
-    rows.slice(0,10).forEach(function(r){
-      var t=el("span","");t.appendChild(el("b","",r.c.n));
-      t.appendChild(document.createTextNode(" "+r.a+(r.b?" "+r.pa+" – "+r.pb+" "+r.b:" "+r.pa)));
-      tk.appendChild(t);tk.appendChild(el("i","","•"));
-    });
-    $("ticker").hidden=false;
-    if(!rs.cat||cats.indexOf(rs.cat)<0){rs.cat=cats[0];rs.rama="";rs.shown=12}
+    $("rsEmpty").hidden=cats.length>0;$("rtabs").hidden=!cats.length;
+    if(!cats.length){$("rpanel").hidden=true;return}
+    if(rs.cat&&cats.indexOf(rs.cat)<0){rs.cat=null}
     var tb=$("rtabs");tb.innerHTML="";
     cats.forEach(function(c){
-      var b=el("button","rtab",c.n);b.type="button";b.style.background=c.c;b.setAttribute("aria-pressed",c===rs.cat);
-      b.onclick=function(){rs.cat=c;rs.rama="";rs.shown=12;rs.anim=true;renderResults()};tb.appendChild(b);
+      var b=el("button","rcat");b.type="button";b.setAttribute("aria-pressed",c===rs.cat);b.setAttribute("aria-label",c.n);
+      var im=el("div","rim");mediaFor(im,ILLUS[c.k],"",c.c);b.appendChild(im);b.appendChild(el("span","",c.n));
+      b.onclick=function(){var open=rs.cat!==c;rs.cat=open?c:null;rs.rama="";rs.shown=12;rs.anim=open;renderResults();if(open){var pn=$("rpanel");setTimeout(function(){pn.scrollIntoView({behavior:"smooth",block:"nearest"})},60)}};tb.appendChild(b);
     });
+    $("rpanel").hidden=!rs.cat;
+    if(!rs.cat){return}
     var mine=rows.filter(function(r){return r.c===rs.cat});
-    mediaFor($("rart"),ILLUS[rs.cat.k],rs.cat.n,rs.cat.c);
     var ramas=[];mine.forEach(function(r){if(r.rama&&ramas.indexOf(r.rama)<0){ramas.push(r.rama)}});
     var rb=$("rrama");rb.innerHTML="";rb.hidden=ramas.length<2;
     if(ramas.length>1){
@@ -1163,29 +1125,7 @@ footer a{color:var(--text)}
     draw();
   })();
 
-  /* Memoria */
-  (function(){
-    var box=$("mem");
-    MEM_TEXTOS.forEach(function(m){
-      var c=el("article","card");
-      if(m.foto){var f=document.createElement("figure"),im=document.createElement("img");im.src=m.foto;im.alt=m.titulo;f.appendChild(im);if(m.pie){f.appendChild(el("figcaption","",m.pie))}c.appendChild(f)}
-      c.appendChild(el("h3","",m.titulo));c.appendChild(el("p","",m.texto));box.appendChild(c);
-    });
-    MEM_FOTOS.forEach(function(p){
-      if(!p.src){return}
-      var c=el("article","card"),f=document.createElement("figure"),im=document.createElement("img");im.src=p.src;im.alt=p.pie||"Foto del polideportivo";f.appendChild(im);if(p.pie){f.appendChild(el("figcaption","",p.pie))}c.appendChild(f);box.appendChild(c);
-    });
-    var call=el("article","card call");call.appendChild(el("h3","","¿Tienes una foto o un recuerdo?"));
-    call.appendChild(el("p","","Cuéntanos qué se vivió en el polideportivo y envíanos tus fotos de torneos, juegos y entrenamientos."));
-    var form=null,b=el("button","btn sm","Quiero compartirla");b.type="button";
-    b.onclick=function(){
-      if(!form){form=miniForm("memoria","",true,"Enviar");form.querySelector("textarea").placeholder="Cuéntanos qué foto o recuerdo quieres compartir. Autorizas su publicación (sin menores de edad).";call.appendChild(form);return}
-      form.hidden=!form.hidden;
-    };
-    call.appendChild(b);box.appendChild(call);
-  })();
-
-  fillFrom();fillTo();loadBusy();loadResults();
+  [fillFrom,fillTo,loadBusy,loadResults].forEach(function(fn){try{fn()}catch(e){if(window.console){console.error(e)}}});
 })();
 </script>
 </body>
