@@ -106,6 +106,10 @@ button.tag[aria-pressed="true"]{background:var(--accent);color:#031218;border-co
 .evform .msg{color:var(--accent);font-size:.9rem;margin:.6rem 0 0}
 .evform .msg a{text-decoration:underline}
 .askbox{max-width:520px;margin-top:1rem}
+.evpay{margin-top:1rem}
+.evflyer{display:block;margin:.4rem 0 .6rem}
+.evflyer img{display:block;width:100%;max-width:360px;border-radius:12px;border:1px solid var(--line)}
+.evpay .msg{margin:0 0 .6rem}
 .cta{margin-top:1.5rem}
 .empty{border:1px dashed var(--line);border-radius:14px;padding:1.4rem;color:var(--muted);margin-top:2rem}
 .empty p{margin:0}
@@ -299,9 +303,9 @@ footer a{color:var(--text)}
 
       <div class="cal" id="calBox">
         <div class="cal-head">
-          <button class="icon" id="prev" aria-label="Mes anterior">‹</button>
+          <button class="icon" id="prev" aria-label="Mes anterior">&#8249;</button>
           <strong id="monthLabel"></strong>
-          <button class="icon" id="next" aria-label="Mes siguiente">›</button>
+          <button class="icon" id="next" aria-label="Mes siguiente">&#8250;</button>
         </div>
         <div class="grid" id="grid"></div>
         <p class="legend"><span><i class="l1"></i>Tu reserva</span><span><i class="l2"></i>Ocupado en tu horario</span><span><i class="l3"></i>Hay horas reservadas</span></p>
@@ -461,8 +465,11 @@ footer a{color:var(--text)}
   // EVENTOS: agrega uno por línea. Los pasados se ocultan solos.
   // fecha "AAAA-MM-DD"; desde/hasta "HH:MM" (opcionales); espacio: multi | campo | pista
   // bloquea:true marca ese espacio como ocupado ese día en el calendario de reservas
+  // flyer: dirección de la imagen del flyer del organizador (súbela al repositorio, ej. "flyer-atletismo-21.jpg"). Ahí van la inscripción, el costo y los datos de pago.
+  //   El dinero de la inscripción NO es del polideportivo: lo gestiona el organizador. organizador: nombre; contacto: WhatsApp del organizador (opcional, solo dígitos, ej. "584141234567").
   var EVENTS=[
-    {fecha:"2026-11-21",titulo:"Competencia de atletismo",deporte:"Atletismo",espacio:"pista",desde:"",hasta:"",detalle:"",inscripcion:true,bloquea:true}
+    {fecha:"2026-11-21",titulo:"Competencia de atletismo",deporte:"Atletismo",espacio:"pista",desde:"",hasta:"",detalle:"",inscripcion:true,bloquea:true,
+     flyer:"",organizador:"",contacto:""}
   ];
   // ENTRENADORES: la sección aparece sola cuando agregas al menos un nombre.
   // foto: dirección de una foto de la persona adulta, con su autorización (opcional)
@@ -767,13 +774,13 @@ footer a{color:var(--text)}
 
   /* Formas de pago: los datos salen aquí mismo, para copiar */
   function montoStr(){var t=currentTotal();return t===null?"":money(t)+bsText(t)}
-  function acctCard(ac){
+  function acctCard(ac,montoPropio){
     var card=el("div","acct"),head=el("div","acct-head");
     head.appendChild(el("h3","",ac.title));
     var all=el("button","copy all","Copiar todo");all.type="button";
     var filled=ac.rows.filter(function(r){return r[1]});
     all.onclick=function(){
-      var m=montoStr(),txt=ac.title+"\n"+filled.map(function(r){return r[0]+": "+r[1]}).join("\n")+(m?"\nMonto: "+m:"");
+      var m=montoPropio!==undefined?montoPropio:montoStr(),txt=ac.title+"\n"+filled.map(function(r){return r[0]+": "+r[1]}).join("\n")+(m?"\nMonto: "+m:"");
       copyText(txt,all,"Copiar todo");
     };
     if(!filled.length){all.hidden=true}
@@ -785,7 +792,7 @@ footer a{color:var(--text)}
       if(r[1]){var c=el("button","copy","Copiar");c.type="button";c.onclick=function(){copyText(r[1],c,"Copiar")};row.appendChild(c)}
       card.appendChild(row);
     });
-    var m=montoStr();
+    var m=montoPropio!==undefined?montoPropio:montoStr();
     if(m){
       var row2=el("div","row"),l2=document.createElement("div");
       l2.appendChild(el("span","","Monto a pagar"));l2.appendChild(el("b","",m));row2.appendChild(l2);
@@ -916,13 +923,16 @@ footer a{color:var(--text)}
   };
 
   /* Formulario corto (inscribirse a un evento o promocionar uno), sin salir a WhatsApp */
-  function miniForm(tipo,evento,conTexto,boton){
+  function miniForm(tipo,evento,conTexto,boton,opts){
+    opts=opts||{};
     var f=el("div","evform"),nom=document.createElement("input"),tel=document.createElement("input"),txt=document.createElement("textarea"),hp=document.createElement("input");
     function lab(t,inp){var l=el("label","",t);l.appendChild(inp);return l}
     nom.autocomplete="name";nom.maxLength=80;tel.type="tel";tel.inputMode="tel";tel.maxLength=20;tel.placeholder="0424 1234567";tel.autocomplete="tel";
     txt.maxLength=400;txt.placeholder="Cuéntanos de qué trata el evento, fecha y lugar";
     f.appendChild(lab("Tu nombre",nom));f.appendChild(lab("Tu teléfono (WhatsApp)",tel));
     if(conTexto){f.appendChild(lab("Cuéntanos del evento",txt))}
+    var fly=null;
+    if(opts.flyer){fly=document.createElement("input");fly.type="file";fly.accept="image/*,application/pdf";f.appendChild(lab("Tu flyer (opcional)",fly))}
     var h=el("div","hp");h.setAttribute("aria-hidden","true");hp.tabIndex=-1;hp.autocomplete="off";h.appendChild(hp);f.appendChild(h);
     var fine=el("p","fine","Usamos tu nombre y teléfono solo para contactarte. ");
     var a=el("a","","Aviso de privacidad");a.href="#reglas";a.setAttribute("data-open","det-priv");a.style.color="var(--accent)";fine.appendChild(a);f.appendChild(fine);
@@ -940,12 +950,39 @@ footer a{color:var(--text)}
         var w=el("a","","Abrir WhatsApp");w.href=waLink("");w.target="_blank";w.rel="noopener";msg.appendChild(w);return;
       }
       send.disabled=true;msg.style.color="var(--accent)";msg.textContent="Enviando…";
-      post({accion:"mensaje",tipo:tipo,evento:evento,nombre:n,telefono:t,texto:txt.value.trim(),web:""}).then(function(r){
-        if(r&&r.ok){msg.textContent="¡Listo! Recibimos tu solicitud y te contactaremos al número que dejaste.";send.hidden=true;return}
+      var prep=(fly&&fly.files[0])?readCapture(fly.files[0]):Promise.resolve(null);
+      prep.then(function(cap){
+        var body={accion:"mensaje",tipo:tipo,evento:evento,nombre:n,telefono:t,texto:txt.value.trim(),web:""};
+        if(cap){body.flyer=cap}
+        return post(body);
+      }).then(function(r){
+        if(r&&r.ok){send.hidden=true;msg.textContent="";f.appendChild(opts.done?opts.done(n):el("p","msg","¡Listo! Recibimos tu solicitud y te contactaremos al número que dejaste."));return}
         msg.style.color="var(--warn)";msg.textContent=ERR[r&&r.error]||"No pudimos enviarlo. Inténtalo otra vez.";send.disabled=false;
-      }).catch(function(){msg.style.color="var(--warn)";msg.textContent="No pudimos conectar. Inténtalo otra vez en un momento.";send.disabled=false});
+      }).catch(function(e){msg.style.color="var(--warn)";msg.textContent=(e&&e.user)?e.message:"No pudimos conectar. Inténtalo otra vez en un momento.";send.disabled=false});
     };
     return f;
+  }
+
+  /* Después de anotarse: la inscripción y el pago los gestiona el organizador (están en su flyer) */
+  function eventPaid(e,nombre){
+    var box=el("div","evpay");
+    box.appendChild(el("p","msg","¡Listo, "+nombre.split(" ")[0]+"! Quedaste anotado en "+e.titulo+"."));
+    box.appendChild(el("p","hint",e.flyer?"La inscripción, el costo y la forma de pago están en el flyer del evento. Los gestiona el organizador, no el polideportivo.":"El organizador te escribirá por WhatsApp con los datos de la inscripción. El pago lo gestiona él, no el polideportivo."));
+    if(e.flyer){var v=el("a","btn sm","Ver el flyer");v.href=e.flyer;v.target="_blank";v.rel="noopener";v.style.marginRight=".5rem";box.appendChild(v)}
+    if(e.contacto){var w=el("a","btn sm ghost","Escribir al organizador");w.target="_blank";w.rel="noopener";w.href="https://wa.me/"+String(e.contacto).replace(/\D/g,"")+"?text="+encodeURIComponent("Hola, soy "+nombre+". Me anoté en "+e.titulo+" ("+e.fecha+") y quiero completar mi inscripción.");box.appendChild(w)}
+    return box;
+  }
+
+  /* Después de pedir promocionar un evento: reservar el espacio */
+  function promoNext(nombre){
+    var box=el("div","evpay");
+    box.appendChild(el("p","msg","¡Listo, "+nombre.split(" ")[0]+"! Recibimos tu solicitud."));
+    box.appendChild(el("p","hint","Los eventos se aprueban caso por caso. Para asegurar la fecha, reserva el espacio como \"Evento o torneo\": la tarifa se confirma con el administrador. Si tienes tu flyer, puedes enviarlo también por WhatsApp."));
+    var r=el("a","btn sm","Reservar el espacio");r.href="#espacios";r.style.marginRight=".5rem";
+    r.addEventListener("click",function(ev){ev.preventDefault();choose("sala");st.act=SPORTS.sala.types.filter(function(a){return a.type==="tbd"})[0];render()});
+    box.appendChild(r);
+    var w=el("a","btn sm ghost","Escribir por WhatsApp");w.target="_blank";w.rel="noopener";w.href=waLink("Hola, soy "+nombre+". Acabo de pedir promocionar un evento y quiero reservar el espacio.");box.appendChild(w);
+    return box;
   }
 
   /* Eventos */
@@ -970,13 +1007,19 @@ footer a{color:var(--text)}
       body.appendChild(el("p","when",d.toLocaleDateString("es",{weekday:"long",day:"numeric",month:"long"})+(hora?" · "+hora:"")));
       if(sp){body.appendChild(el("p","","Lugar: "+sp))}
       if(e.detalle){body.appendChild(el("p","",e.detalle))}
+      if(e.organizador){body.appendChild(el("p","","Organiza: "+e.organizador))}
+      if(e.flyer){
+        var fl=el("a","evflyer");fl.href=e.flyer;fl.target="_blank";fl.rel="noopener";fl.setAttribute("aria-label","Ver el flyer de "+e.titulo);
+        var fi=document.createElement("img");fi.src=e.flyer;fi.alt="Flyer: "+e.titulo;fl.appendChild(fi);body.appendChild(fl);
+      }
+      if(e.inscripcion!==false){body.appendChild(el("p","fine","Inscripción y pago: según el flyer. Los gestiona el organizador del evento, no el polideportivo."))}
       var n=Math.round((d-today)/864e5);
       body.appendChild(el("p","left",n===0?"Es hoy":n===1?"Es mañana":"Faltan "+n+" días"));
       var ac=el("div","ev-actions"),form=null;
       if(e.inscripcion!==false){
         var p=el("button","btn sm","Quiero participar");p.type="button";p.setAttribute("aria-expanded","false");
         p.onclick=function(){
-          if(!form){form=miniForm("inscripcion",e.titulo+" ("+e.fecha+")",false,"Anotarme");body.appendChild(form);p.setAttribute("aria-expanded","true");return}
+          if(!form){form=miniForm("inscripcion",e.titulo+" ("+e.fecha+")",false,"Anotarme",{done:function(nombre){return eventPaid(e,nombre)}});body.appendChild(form);p.setAttribute("aria-expanded","true");return}
           form.hidden=!form.hidden;p.setAttribute("aria-expanded",String(!form.hidden));
         };
         ac.appendChild(p);
@@ -986,7 +1029,7 @@ footer a{color:var(--text)}
     });
     var askForm=null;
     $("evAsk").onclick=function(){
-      if(!askForm){askForm=miniForm("promocion","",true,"Enviar");$("askBox").appendChild(askForm);return}
+      if(!askForm){askForm=miniForm("promocion","",true,"Enviar",{flyer:true,done:promoNext});$("askBox").appendChild(askForm);return}
       askForm.hidden=!askForm.hidden;
     };
   })();
