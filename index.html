@@ -32,8 +32,11 @@ section{padding:4.5rem 0;border-top:1px solid var(--line)}
 @media(max-width:600px){section{padding:3rem 0}.wrap{padding:0 1rem}}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 header.nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 0;gap:1rem}
-.brand{font-family:var(--display);font-weight:700;text-decoration:none}
-.brand span{color:var(--accent)}
+.brand{display:flex;align-items:center;gap:.7rem;font-family:var(--display);font-weight:700;text-decoration:none;color:var(--text)}
+.brand .bn{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.brand .logo{display:block;width:140px;height:60px;overflow:hidden;flex:none}
+.brand .logo img{display:block;width:148px;max-width:none;height:auto;margin:-22px 0 0 -5px}
+@media(max-width:700px){.brand{flex-direction:column;align-items:flex-start;gap:0;min-width:0}.brand .logo{width:112px;height:46px}.brand .logo img{width:118px;margin:-17px 0 0 -4px}.brand .bn{font-size:.66rem;letter-spacing:.14em;margin-bottom:-2px}}
 nav a{margin-left:1.25rem;color:var(--muted);text-decoration:none;font-size:.95rem}
 nav a:hover{color:var(--text)}
 @media(max-width:700px){nav a.hide{display:none}nav a{margin-left:.9rem}}
@@ -107,6 +110,28 @@ button.tag[aria-pressed="true"]{background:var(--accent);color:#031218;border-co
 .evform .msg a{text-decoration:underline}
 .askbox{max-width:520px;margin-top:1rem}
 .evpay{margin-top:1rem}
+/* Cuentas claras */
+.cu-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin:1.2rem 0}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:.9rem 1rem}
+.kpi .kl{display:block;color:var(--muted);font-size:.85rem}
+.kpi .kv{font:700 clamp(1.2rem,4.5vw,1.8rem) var(--display)}
+.cu-chart{position:relative;margin:1.2rem 0;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1rem 1rem .6rem}
+.cu-chart figcaption{font:500 1rem var(--display);margin-bottom:.4rem}
+.cu-legend{display:flex;gap:1.2rem;color:var(--muted);font-size:.9rem;margin-bottom:.3rem}
+.cu-legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:.4rem;vertical-align:-1px}
+.sw.in,.cu-in{background:#3498d6;fill:#3498d6}.sw.out,.cu-out{background:#cf8f2a;fill:#cf8f2a}
+.cu-svg svg{display:block;width:100%;height:auto;overflow:visible}
+.cu-svg text{fill:var(--muted);font:400 11px var(--body)}
+.cu-svg text.sel{fill:var(--text);font-weight:600}
+.cu-svg .grid{stroke:var(--line);stroke-width:1}
+.cu-svg .hit{fill:transparent;cursor:pointer}
+.cu-tip{position:absolute;pointer-events:none;background:#031218;border:1px solid var(--line);border-radius:10px;padding:.4rem .6rem;font-size:.85rem;white-space:nowrap;z-index:5}
+.cu-g{display:grid;grid-template-columns:minmax(90px,150px) 1fr auto;gap:.6rem;align-items:center;margin:.35rem 0;font-size:.95rem}
+.cu-g .bar{height:10px;background:transparent}
+.cu-g .bar i{display:block;height:10px;background:#cf8f2a;border-radius:0 4px 4px 0;min-width:2px}
+.cu-g b{font-variant-numeric:tabular-nums}
+.cu-det{margin-top:1rem}.cu-det table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:.6rem}
+.cu-det th,.cu-det td{text-align:left;padding:.35rem .4rem;border-bottom:1px solid var(--line)}.cu-det td.n,.cu-det th.n{text-align:right}
 .evflyer{display:block;margin:.4rem 0 .6rem}
 .evflyer img{display:block;width:100%;max-width:360px;border-radius:12px;border:1px solid var(--line)}
 .evpay .msg{margin:0 0 .6rem}
@@ -244,8 +269,8 @@ footer a{color:var(--text)}
 
 <div class="wrap">
   <header class="nav">
-    <a class="brand" href="#inicio">Polideportivo <span>Alejandro Carrasquel</span></a>
-    <nav><a href="#espacios">Reservar</a><a href="#eventos">Eventos</a><a class="hide" href="#resultados">Resultados</a><a class="hide" id="navEnt" href="#entrenadores" hidden>Entrenadores</a><a class="hide" href="#reglas">Reglas</a></nav>
+    <a class="brand" href="#inicio" aria-label="Polideportivo Alejandro Carrasquel, inicio"><span class="bn">Polideportivo</span><span class="logo"><img src="PAC%20LOGO.png" alt="" width="148" height="84" onerror="this.parentNode.outerHTML='<b>Alejandro Carrasquel</b>'"></span></a>
+    <nav><a href="#espacios">Reservar</a><a href="#eventos">Eventos</a><a class="hide" href="#resultados">Resultados</a><a class="hide" id="navEnt" href="#entrenadores" hidden>Entrenadores</a><a class="hide" href="#cuentas">Cuentas</a><a class="hide" href="#reglas">Reglas</a></nav>
   </header>
 
   <main id="inicio">
@@ -348,6 +373,7 @@ footer a{color:var(--text)}
       <div id="payInfo"></div>
       <label>Número de referencia o de recibo<input id="ref" maxlength="40" autocomplete="off"></label>
       <label id="shotBox">Captura o foto de tu comprobante<input type="file" id="shot" accept="image/*,application/pdf"></label>
+      <p class="fine">Sube solo el comprobante de pago (captura del banco o foto del billete). Cualquier otra imagen está prohibida y puede ser reportada a las autoridades.</p>
       <p class="hint" id="shotHint"></p>
       <button class="btn" id="submit">Reportar mi pago</button>
       <p id="status" role="status"></p>
@@ -369,7 +395,7 @@ footer a{color:var(--text)}
     <p class="note" id="rsDemo" hidden>Vista de ejemplo: estos no son resultados reales. Se ocultan solos cuando publiques los primeros.</p>
     <div class="rtabs" id="rtabs" role="group" aria-label="Categoría"></div>
     <div class="rpanel" id="rpanel" hidden>
-      <div class="rboard"><div class="tags" id="rrama" role="group" aria-label="Rama"></div><div id="rlist"></div></div>
+      <div class="rboard"><div class="tags" id="rrama" role="group" aria-label="Rama"></div><div class="tags" id="rdiv" role="group" aria-label="División o edad"></div><div id="rlist"></div></div>
     </div>
     <div class="empty" id="rsEmpty" hidden><p>Aún no hay resultados publicados. Aquí aparecerán los marcadores de torneos y competencias.</p></div>
   </section>
@@ -392,6 +418,20 @@ footer a{color:var(--text)}
           <li>Los menores de edad deben estar siempre acompañados por un adulto responsable.</li>
           <li>Cada persona practica bajo su propia responsabilidad. El Consejo Comunal no responde por lesiones ni por objetos perdidos.</li>
           <li>Eventos y torneos se aprueban caso por caso con el administrador.</li>
+          <li><b>Por ahora el polideportivo no tiene baños disponibles.</b> Está prohibido usar las canchas, el campo, la pista o sus alrededores como sanitario.</li>
+          <li>Los espacios tienen uso prioritario para los residentes y las escuelas deportivas de la zona.</li>
+          <li>No se permite el ingreso de motos ni vehículos a la cancha, el campo o la pista.</li>
+          <li>No se permite el consumo de bebidas alcohólicas ni de cigarrillos en las áreas deportivas.</li>
+          <li>Usa un volumen de música moderado y respeta a los vecinos. Ventas, toldos o publicidad solo con autorización del Consejo Comunal.</li>
+          <li>El incumplimiento de estas reglas puede significar el retiro del espacio y la suspensión de reservas futuras.</li>
+        </ul>
+      </div></details>
+      <details id="det-img"><summary>Comprobantes e imágenes que se pueden enviar</summary><div class="body">
+        <p>Por esta página y por WhatsApp envía <b>únicamente comprobantes de pago</b>: la captura del banco, el recibo o la foto del billete con el que pagaste.</p>
+        <ul>
+          <li>Está prohibido enviar fotos o imágenes que no sean ese comprobante, en especial contenido íntimo, sexual, violento u ofensivo.</li>
+          <li>Ese contenido se elimina, se bloquea el número y puede ser puesto en conocimiento de las autoridades competentes.</li>
+          <li>Si tu solicitud incluye un flyer, debe ser solo el flyer del evento.</li>
         </ul>
       </div></details>
       <details id="det-cancel"><summary>Política de cancelación</summary><div class="body">
@@ -413,23 +453,37 @@ footer a{color:var(--text)}
           <li>Tu comprobante puede mostrar datos bancarios: tapa los que no sean la referencia, el monto y la fecha.</li>
           <li>Se conservan para la rendición de cuentas del Consejo Comunal.</li>
           <li>Para corregir o pedir que eliminemos tus datos, escríbenos por WhatsApp.</li>
+          <li>No recopilamos imágenes distintas a los comprobantes de pago y a los flyers de eventos.</li>
         </ul>
       </div></details>
     </div>
   </section>
 
-  <section id="avance">
-    <h2>Tu aporte se queda en el polideportivo</h2>
-    <p class="muted">Lo que se recauda se invierte en el polideportivo, con autogestión de la comunidad. Aquí ves el avance.</p>
+  <section id="cuentas">
+    <h2>Cuentas claras</h2>
+    <p class="muted">Lo que se recauda se invierte en el polideportivo, con autogestión de la comunidad. Cada mes publicamos aquí cuánto entró y en qué se usó.</p>
+    <div class="empty" id="cuEmpty"><p>Publicaremos el primer resumen al cerrar el mes.</p></div>
+    <div id="cuBody" hidden>
+      <div class="tags" id="cuMes" role="group" aria-label="Mes"></div>
+      <div class="cu-kpis" id="cuKpis"></div>
+      <figure class="cu-chart" id="cuChart">
+        <figcaption>Ingresos y gastos por mes (en dólares)</figcaption>
+        <div class="cu-legend"><span><i class="sw in"></i>Ingresos</span><span><i class="sw out"></i>Gastos</span></div>
+        <div class="cu-svg" id="cuBars"></div>
+        <div class="cu-tip" id="cuTip" hidden></div>
+      </figure>
+      <h3 id="cuGTitle">En qué se usó</h3>
+      <div id="cuGastos"></div>
+      <details class="cu-det"><summary>Ver como tabla</summary><div id="cuTabla"></div></details>
+    </div>
+    <p class="fine">Cifras en dólares. Los ingresos salen de las reservas confirmadas y conciliadas con el banco; los gastos los registra el administrador del polideportivo.</p>
     <ul class="steps">
       <li class="done"><h3>Cancha de usos múltiples pintada</h3><p>Lista para fútbol sala, voleibol, básquet, yoga y aeróbicos.</p></li>
       <li class="done"><h3>Pista y campo abiertos para alquilar</h3><p>Ya puedes reservar tu horario.</p></li>
-      <li><h3>Recuperación del gimnasio</h3><p>Estamos trabajando para volver a abrirlo.</p></li>
-      <li><h3>Mejoras con lo recaudado</h3><p>Cuentas claras de en qué se usa cada aporte.</p></li>
     </ul>
   </section>
 </div>
-<footer><div class="wrap">Consejo Comunal Alejandro Carrasquel · WhatsApp: <a href="https://wa.me/584242324870">0424 2324870</a></div></footer>
+<footer><div class="wrap">Polideportivo Alejandro Carrasquel · Administrado por el Consejo Comunal Unidad de Desarrollo Alejandro Carrasquel · WhatsApp: <a href="https://wa.me/584242324870">0424 2324870</a></div></footer>
 
 <script>
 (function(){
@@ -769,7 +823,8 @@ footer a{color:var(--text)}
     limite:"Ya tienes varias reservas apartadas sin pagar. Reporta su pago o cámbialas.",
     invalido:"Revisa los datos e inténtalo de nuevo.",
     vencida:"Tu horario apartado venció. Vuelve a reservar.",
-    estado:"Esta reserva ya no admite pago. Escríbenos con tu código."
+    estado:"Esta reserva ya no admite pago. Escríbenos con tu código.",
+    duplicada:"Ya enviaste esta solicitud. Revisa tu WhatsApp o escríbenos."
   };
 
   /* Formas de pago: los datos salen aquí mismo, para copiar */
@@ -863,7 +918,7 @@ footer a{color:var(--text)}
     .then(function(r){
       if(r&&r.ok){st.hold=r;setLocked(true);fm("Horario apartado con el código "+r.codigo+".");openPay();return}
       if(r&&r.error==="ocupado"){if(r.ocupado){remote=r.ocupado}fm(r.mensaje||"Ese horario acaba de ser tomado por otra persona. Elige otro.");update();return}
-      fm(ERR[r&&r.error]||"No pudimos apartar tu horario. Inténtalo otra vez.");
+      fm((r&&r.error==="duplicada"&&r.mensaje)||ERR[r&&r.error]||"No pudimos apartar tu horario. Inténtalo otra vez.");
     })
     .catch(function(){fm("No pudimos conectar. Inténtalo otra vez en un momento.")})
     .then(function(){btn.textContent=label;btn.disabled=!cur.ok||locked()});
@@ -932,7 +987,7 @@ footer a{color:var(--text)}
     f.appendChild(lab("Tu nombre",nom));f.appendChild(lab("Tu teléfono (WhatsApp)",tel));
     if(conTexto){f.appendChild(lab("Cuéntanos del evento",txt))}
     var fly=null;
-    if(opts.flyer){fly=document.createElement("input");fly.type="file";fly.accept="image/*,application/pdf";f.appendChild(lab("Tu flyer (opcional)",fly))}
+    if(opts.flyer){fly=document.createElement("input");fly.type="file";fly.accept="image/*,application/pdf";f.appendChild(lab("Tu flyer (opcional)",fly));f.appendChild(el("p","fine","Sube solo el flyer del evento. Cualquier otra imagen está prohibida."))}
     var h=el("div","hp");h.setAttribute("aria-hidden","true");hp.tabIndex=-1;hp.autocomplete="off";h.appendChild(hp);f.appendChild(h);
     var fine=el("p","fine","Usamos tu nombre y teléfono solo para contactarte. ");
     var a=el("a","","Aviso de privacidad");a.href="#reglas";a.setAttribute("data-open","det-priv");a.style.color="var(--accent)";fine.appendChild(a);f.appendChild(fine);
@@ -957,7 +1012,7 @@ footer a{color:var(--text)}
         return post(body);
       }).then(function(r){
         if(r&&r.ok){send.hidden=true;msg.textContent="";f.appendChild(opts.done?opts.done(n,t,txt.value.trim()):el("p","msg","¡Listo! Recibimos tu solicitud y te contactaremos al número que dejaste."));return}
-        msg.style.color="var(--warn)";msg.textContent=ERR[r&&r.error]||"No pudimos enviarlo. Inténtalo otra vez.";send.disabled=false;
+        msg.style.color="var(--warn)";msg.textContent=(r&&r.error==="duplicada"&&r.mensaje)||ERR[r&&r.error]||"No pudimos enviarlo. Inténtalo otra vez.";send.disabled=false;
       }).catch(function(e){msg.style.color="var(--warn)";msg.textContent=(e&&e.user)?e.message:"No pudimos conectar. Inténtalo otra vez en un momento.";send.disabled=false});
     };
     return f;
@@ -1051,7 +1106,7 @@ footer a{color:var(--text)}
   // Publica nombres de equipos, clubes o personas adultas. No publiques nombres de menores de edad.
   var RESULTS=[];
   var DEMO_RESULTS=true;   // muestra resultados de ejemplo mientras no haya reales. Ponlo en false antes de publicar
-  var rs={cat:null,rama:"",rows:null,shown:12,demo:false,lottie:false};
+  var rs={cat:null,rama:"",div:"",rows:null,shown:12,demo:false,lottie:false};
   function norm(s){return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim()}
   function catOf(s){
     var n=norm(s),al={"futbol sala":"sala","voleibol":"voley","volleyball":"voley","baloncesto":"basquet","basket":"basquet"};
@@ -1062,7 +1117,8 @@ footer a{color:var(--text)}
   function demoRows(){
     var d=iso(today);
     return [
-      {cat:"sala",rama:"Masculino",comp:"Torneo de ejemplo",fecha:d,fase:"Semifinal",a:"Equipo A",pa:"3",b:"Equipo B",pb:"1"},
+      {cat:"sala",rama:"Masculino",division:"Libre",comp:"Torneo de ejemplo",fecha:d,fase:"Semifinal",a:"Equipo A",pa:"3",b:"Equipo B",pb:"1"},
+      {cat:"sala",rama:"Masculino",division:"Sub-12",comp:"Torneo de ejemplo",fecha:d,fase:"Jornada 2",a:"Escuela M",pa:"4",b:"Escuela N",pb:"2"},
       {cat:"sala",rama:"Masculino",comp:"Torneo de ejemplo",fecha:d,fase:"Semifinal",a:"Equipo C",pa:"2",b:"Equipo D",pb:"4"},
       {cat:"sala",rama:"Femenino",comp:"Torneo de ejemplo",fecha:d,fase:"Final",a:"Equipo E",pa:"1",b:"Equipo F",pb:"0"},
       {cat:"voley",rama:"Mixto",comp:"Liga de ejemplo",fecha:d,fase:"Jornada 1",a:"Equipo G",pa:"3",b:"Equipo H",pb:"2"},
@@ -1089,7 +1145,7 @@ footer a{color:var(--text)}
   function renderResults(){
     var rows=rs.rows&&rs.rows.length?rs.rows:RESULTS;rs.demo=false;
     if(!rows.length&&DEMO_RESULTS){rows=demoRows();rs.demo=true}
-    rows=rows.map(function(r){var c=catOf(r.cat);return c?{c:c,rama:r.rama||"",comp:r.comp||"",fecha:r.fecha||"",fase:r.fase||"",a:r.a||"",pa:r.pa==null?"":String(r.pa),b:r.b||"",pb:r.pb==null?"":String(r.pb)}:null}).filter(Boolean);
+    rows=rows.map(function(r){var c=catOf(r.cat);return c?{c:c,rama:r.rama||"",division:r.division||"",comp:r.comp||"",fecha:r.fecha||"",fase:r.fase||"",a:r.a||"",pa:r.pa==null?"":String(r.pa),b:r.b||"",pb:r.pb==null?"":String(r.pb)}:null}).filter(Boolean);
     rows.sort(function(x,y){return x.fecha<y.fecha?1:x.fecha>y.fecha?-1:0});
     $("rsDemo").hidden=!rs.demo;
     var cats=CATS.filter(function(c){return rows.some(function(r){return r.c===c})});
@@ -1100,7 +1156,7 @@ footer a{color:var(--text)}
     cats.forEach(function(c){
       var b=el("button","rcat");b.type="button";b.setAttribute("aria-pressed",c===rs.cat);b.setAttribute("aria-label",c.n);
       var im=el("div","rim");mediaFor(im,ILLUS[c.k],"",c.c);b.appendChild(im);b.appendChild(el("span","",c.n));
-      b.onclick=function(){var open=rs.cat!==c;rs.cat=open?c:null;rs.rama="";rs.shown=12;rs.anim=open;renderResults();if(open){var pn=$("rpanel");setTimeout(function(){pn.scrollIntoView({behavior:"smooth",block:"nearest"})},60)}};tb.appendChild(b);
+      b.onclick=function(){var open=rs.cat!==c;rs.cat=open?c:null;rs.rama="";rs.div="";rs.shown=12;rs.anim=open;renderResults();if(open){var pn=$("rpanel");setTimeout(function(){pn.scrollIntoView({behavior:"smooth",block:"nearest"})},60)}};tb.appendChild(b);
     });
     $("rpanel").hidden=!rs.cat;
     if(!rs.cat){return}
@@ -1110,15 +1166,25 @@ footer a{color:var(--text)}
     if(ramas.length>1){
       ["Todos"].concat(ramas).forEach(function(x){
         var b=el("button","tag",x);b.type="button";b.setAttribute("aria-pressed",(x==="Todos"&&!rs.rama)||x===rs.rama);
-        b.onclick=function(){rs.rama=x==="Todos"?"":x;rs.shown=12;renderResults()};rb.appendChild(b);
+        b.onclick=function(){rs.rama=x==="Todos"?"":x;rs.div="";rs.shown=12;renderResults()};rb.appendChild(b);
       });
     }
     if(rs.rama){mine=mine.filter(function(r){return r.rama===rs.rama})}
+    var divs=[];mine.forEach(function(r){if(r.division&&divs.indexOf(r.division)<0){divs.push(r.division)}});
+    if(rs.div&&divs.indexOf(rs.div)<0){rs.div=""}
+    var db=$("rdiv");db.innerHTML="";db.hidden=divs.length<2;
+    if(divs.length>1){
+      ["Todas"].concat(divs).forEach(function(x){
+        var b=el("button","tag",x);b.type="button";b.setAttribute("aria-pressed",(x==="Todas"&&!rs.div)||x===rs.div);
+        b.onclick=function(){rs.div=x==="Todas"?"":x;rs.shown=12;renderResults()};db.appendChild(b);
+      });
+    }
+    if(rs.div){mine=mine.filter(function(r){return r.division===rs.div})}
     var list=$("rlist");list.innerHTML="";
     var groups=[],gi={};
     mine.slice(0,rs.shown).forEach(function(r){
-      var k=r.comp+"|"+r.fecha+"|"+(rs.rama?"":r.rama);
-      if(!(k in gi)){gi[k]=groups.length;groups.push({t:r.comp+(r.rama&&!rs.rama?" · "+r.rama:"")+(r.fecha?" · "+parseISO(r.fecha).toLocaleDateString("es",{day:"numeric",month:"short"}):""),rows:[]})}
+      var k=r.comp+"|"+r.fecha+"|"+(rs.rama?"":r.rama)+"|"+(rs.div?"":r.division);
+      if(!(k in gi)){gi[k]=groups.length;groups.push({t:r.comp+(r.rama&&!rs.rama?" · "+r.rama:"")+(r.division&&!rs.div?" · "+r.division:"")+(r.fecha?" · "+parseISO(r.fecha).toLocaleDateString("es",{day:"numeric",month:"short"}):""),rows:[]})}
       groups[gi[k]].rows.push(r);
     });
     groups.forEach(function(g){
@@ -1140,7 +1206,99 @@ footer a{color:var(--text)}
   function loadResults(){
     renderResults();
     if(!SUBMIT_URL){return}
-    fetch(SUBMIT_URL+"?accion=resultados").then(function(r){return r.json()}).then(function(j){if(Array.isArray(j)){rs.rows=j.map(function(r){return {cat:r.categoria,rama:r.rama,comp:r.competencia,fecha:r.fecha,fase:r.fase,a:r.a,pa:r.pa,b:r.b,pb:r.pb}});renderResults()}}).catch(function(){});
+    fetch(SUBMIT_URL+"?accion=resultados").then(function(r){return r.json()}).then(function(j){if(Array.isArray(j)){rs.rows=j.map(function(r){return {cat:r.categoria,rama:r.rama,division:r.division,comp:r.competencia,fecha:r.fecha,fase:r.fase,a:r.a,pa:r.pa,b:r.b,pb:r.pb}});renderResults()}}).catch(function(){});
+  }
+
+
+  /* Cuentas claras: ingresos (de las reservas confirmadas) y gastos mensuales que publica el administrador */
+  var cu={rows:[],sel:null};
+  var MESES=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+  function usd(n){return "$"+Number(n||0).toLocaleString("es",{minimumFractionDigits:0,maximumFractionDigits:2})}
+  function mesTxt(m){var p=m.split("-");return MESES[+p[1]-1]+" "+p[0]}
+  function mesCorto(m){var p=m.split("-");return MESES[+p[1]-1].slice(0,3)+" "+p[0].slice(2)}
+  function niceMax(v){if(v<=0){return 10}var e=Math.pow(10,Math.floor(Math.log(v)/Math.LN10)),f=v/e;return (f<=1?1:f<=2?2:f<=5?5:10)*e}
+  function loadCuentas(){
+    if(!SUBMIT_URL){return}
+    fetch(SUBMIT_URL+"?accion=cuentas").then(function(r){return r.json()}).then(function(j){
+      if(!Array.isArray(j)||!j.length){return}
+      cu.rows=j;cu.sel=j[0].mes;renderCuentas();
+    }).catch(function(){});
+  }
+  function cuTable(rows,head,cls){
+    var t=document.createElement("table"),th=document.createElement("thead"),tr=document.createElement("tr");
+    head.forEach(function(x,i){var c=el("th",cls[i],x);tr.appendChild(c)});th.appendChild(tr);t.appendChild(th);
+    var tb=document.createElement("tbody");
+    rows.forEach(function(r){var q=document.createElement("tr");r.forEach(function(x,i){q.appendChild(el("td",cls[i],x))});tb.appendChild(q)});
+    t.appendChild(tb);return t;
+  }
+  function renderCuentas(){
+    var r=cu.rows.filter(function(m){return m.mes===cu.sel})[0]||cu.rows[0];
+    $("cuEmpty").hidden=true;$("cuBody").hidden=false;
+    var tabs=$("cuMes");tabs.innerHTML="";
+    cu.rows.slice(0,12).forEach(function(m){
+      var b=el("button","tag",mesTxt(m.mes));b.type="button";b.setAttribute("aria-pressed",m.mes===r.mes);
+      b.onclick=function(){cu.sel=m.mes;renderCuentas()};tabs.appendChild(b);
+    });
+    var saldo=r.ingresos-r.totalGastos,k=$("cuKpis");k.innerHTML="";
+    [["Ingresos",usd(r.ingresos)],["Gastos",usd(r.totalGastos)],["Saldo del mes",(saldo<0?"−":"")+usd(Math.abs(saldo))]].forEach(function(x){
+      var d=el("div","kpi");d.appendChild(el("span","kl",x[0]));d.appendChild(el("b","kv",x[1]));k.appendChild(d);
+    });
+    drawBars(r);drawGastos(r);
+    var tb=$("cuTabla");tb.innerHTML="";
+    tb.appendChild(cuTable(cu.rows.map(function(m){return [mesTxt(m.mes),usd(m.ingresos),usd(m.totalGastos),((m.ingresos-m.totalGastos)<0?"−":"")+usd(Math.abs(m.ingresos-m.totalGastos))]}),["Mes","Ingresos","Gastos","Saldo"],["","n","n","n"]));
+    if(r.gastos.length){
+      tb.appendChild(el("h3","","Detalle de gastos de "+mesTxt(r.mes)));
+      tb.appendChild(cuTable(r.gastos.map(function(g){return [g.fecha,g.concepto,g.categoria,usd(g.monto)]}),["Fecha","Concepto","Categoría","Monto"],["","","","n"]));
+    }
+  }
+  function drawBars(sel){
+    var ms=cu.rows.slice(0,6).reverse(),W=600,H=230,ml=46,mr=8,mt=22,mb=28,pw=W-ml-mr,ph=H-mt-mb;
+    var mx=0;ms.forEach(function(m){mx=Math.max(mx,m.ingresos,m.totalGastos)});mx=niceMax(mx);
+    var NS="http://www.w3.org/2000/svg",s=document.createElementNS(NS,"svg");
+    s.setAttribute("viewBox","0 0 "+W+" "+H);s.setAttribute("role","img");
+    s.setAttribute("aria-label","Ingresos y gastos de los últimos meses. Los datos están en la tabla de abajo.");
+    function add(p,tag,at,txt){var e=document.createElementNS(NS,tag);for(var k in at){e.setAttribute(k,at[k])}if(txt!=null){e.textContent=txt}p.appendChild(e);return e}
+    [0,.5,1].forEach(function(f){var y=mt+ph-ph*f;add(s,"line",{x1:ml,x2:W-mr,y1:y,y2:y,"class":"grid"});add(s,"text",{x:ml-6,y:y+4,"text-anchor":"end"},usd(mx*f))});
+    var bw=pw/ms.length,w=Math.min(28,bw*.3);
+    function bar(x,v,cls){
+      var hh=ph*v/mx;if(hh<=0){return}
+      var r=Math.min(4,hh,w/2),y=mt+ph-hh;
+      add(s,"path",{d:"M"+x+","+(y+hh)+"V"+(y+r)+"Q"+x+","+y+" "+(x+r)+","+y+"H"+(x+w-r)+"Q"+(x+w)+","+y+" "+(x+w)+","+(y+r)+"V"+(y+hh)+"Z","class":cls});
+    }
+    ms.forEach(function(m,i){
+      var cx=ml+bw*i+bw/2,isSel=m.mes===sel.mes,x1=cx-w-1,x2=cx+1;
+      bar(x1,m.ingresos,"cu-in");bar(x2,m.totalGastos,"cu-out");
+      if(isSel){
+        add(s,"text",{x:x1+w/2,y:mt+ph-ph*m.ingresos/mx-5,"text-anchor":"middle","class":"sel"},usd(m.ingresos));
+        add(s,"text",{x:x2+w/2,y:mt+ph-ph*m.totalGastos/mx-5,"text-anchor":"middle","class":"sel"},usd(m.totalGastos));
+      }
+      add(s,"text",{x:cx,y:H-8,"text-anchor":"middle","class":isSel?"sel":""},mesCorto(m.mes));
+      var hit=add(s,"rect",{x:ml+bw*i,y:mt,width:bw,height:ph+mb,"class":"hit",tabindex:"0",role:"button","aria-label":mesTxt(m.mes)+": ingresos "+usd(m.ingresos)+", gastos "+usd(m.totalGastos)});
+      hit.addEventListener("click",function(){cu.sel=m.mes;renderCuentas()});
+      hit.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();cu.sel=m.mes;renderCuentas()}});
+      function tip(ev){
+        var t=$("cuTip"),box=$("cuChart").getBoundingClientRect();
+        t.textContent="";t.appendChild(el("b","",mesTxt(m.mes)));t.appendChild(document.createElement("br"));
+        t.appendChild(document.createTextNode("Ingresos "+usd(m.ingresos)+" · Gastos "+usd(m.totalGastos)));
+        t.hidden=false;t.style.left=Math.max(4,Math.min(ev.clientX-box.left+12,box.width-t.offsetWidth-4))+"px";t.style.top=Math.max(4,ev.clientY-box.top-48)+"px";
+      }
+      hit.addEventListener("pointermove",tip);hit.addEventListener("pointerenter",tip);
+      hit.addEventListener("pointerleave",function(){$("cuTip").hidden=true});
+    });
+    var box=$("cuBars");box.innerHTML="";box.appendChild(s);
+  }
+  function drawGastos(r){
+    var box=$("cuGastos");box.innerHTML="";
+    $("cuGTitle").textContent="En qué se usó en "+mesTxt(r.mes);
+    if(!r.gastos.length){box.appendChild(el("p","muted","Este mes no se registraron gastos."));return}
+    var cat={};r.gastos.forEach(function(g){cat[g.categoria]=(cat[g.categoria]||0)+g.monto});
+    var list=Object.keys(cat).map(function(k){return [k,cat[k]]}).sort(function(a,b){return b[1]-a[1]}),top=list[0][1];
+    list.forEach(function(x){
+      var row=el("div","cu-g");row.appendChild(el("span","",x[0]));
+      var bar=el("div","bar"),i=document.createElement("i");i.style.width=Math.max(2,x[1]/top*100)+"%";bar.appendChild(i);row.appendChild(bar);
+      row.appendChild(el("b","",usd(x[1])+(r.totalGastos?" · "+Math.round(x[1]/r.totalGastos*100)+"%":"")));
+      box.appendChild(row);
+    });
   }
 
   /* Entrenadores */
@@ -1173,7 +1331,7 @@ footer a{color:var(--text)}
     draw();
   })();
 
-  [fillFrom,fillTo,loadBusy,loadResults].forEach(function(fn){try{fn()}catch(e){if(window.console){console.error(e)}}});
+  [fillFrom,fillTo,loadBusy,loadResults,loadCuentas].forEach(function(fn){try{fn()}catch(e){if(window.console){console.error(e)}}});
 })();
 </script>
 </body>
