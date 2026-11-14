@@ -68,9 +68,9 @@ button.tag[aria-pressed="true"]{background:var(--accent);color:#031218;border-co
 .space{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;text-align:left;color:inherit;transition:border-color .2s,transform .2s;display:flex;flex-direction:column}
 .space:hover{border-color:var(--accent);transform:translateY(-3px)}
 .space.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
-.space .art{--ac:#13232f;background:#c9b6f5;padding:1rem;cursor:pointer;border:0;display:block;width:100%}
-.space[data-space="campo"] .art{background:#f7d98b}
-.space[data-space="pista"] .art{background:#8fe3b8}
+.space .art{--ac:#13232f;background:#c287fd;padding:1rem;cursor:pointer;border:0;display:block;width:100%}
+.space[data-space="campo"] .art{background:#ffd504}
+.space[data-space="pista"] .art{background:#4be389}
 .space .art svg{display:block;width:100%;height:auto;fill:none;stroke:var(--ac);stroke-opacity:.85;stroke-width:1.6}
 .space .info{padding:1.2rem 1.3rem 1.4rem;display:flex;flex-direction:column;flex:1;cursor:pointer}
 .space h3{font-size:1.2rem;margin-bottom:.6rem}
@@ -110,7 +110,7 @@ button.tag[aria-pressed="true"]{background:var(--accent);color:#031218;border-co
 .evform .msg a{text-decoration:underline}
 .askbox{max-width:520px;margin-top:1rem}
 .evpay{margin-top:1rem}
-/* Cuentas claras */
+/* Tablero de gestión */
 .cu-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin:1.2rem 0}
 .kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:.9rem 1rem}
 .kpi .kl{display:block;color:var(--muted);font-size:.85rem}
@@ -140,13 +140,22 @@ button.tag[aria-pressed="true"]{background:var(--accent);color:#031218;border-co
 .empty p{margin:0}
 
 /* Resultados */
-.rtabs{display:flex;gap:1rem;overflow-x:auto;padding:1.2rem .2rem .8rem;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
-.rcat{flex:0 0 min(78%,300px);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);cursor:pointer;padding:.3rem .3rem .7rem;text-align:center;font:500 1.1rem var(--display);opacity:.8;scroll-snap-align:center;-webkit-tap-highlight-color:transparent}
-.rcat .rim{display:grid;place-items:center;height:300px;margin-bottom:.5rem}
-.rcat .rim img,.rcat .rim video,.rcat .rim .lot{display:block;width:100%;height:100%;max-width:300px;max-height:300px;object-fit:contain;animation:floaty 5s ease-in-out infinite}
+.rcar{position:relative;margin:.4rem -1rem 0}
+.rtabs{--cw:min(62vw,280px);position:relative;display:flex;gap:.4rem;overflow-x:auto;padding:1.4rem calc(50% - var(--cw)/2) 1rem;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:grab;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.rtabs::-webkit-scrollbar{display:none}
+.rtabs.drag{cursor:grabbing;scroll-snap-type:none}
+.rcat{flex:0 0 var(--cw);background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);cursor:pointer;padding:.3rem .3rem .7rem;text-align:center;font:500 1.1rem var(--display);opacity:.5;transform:scale(.86);transition:transform .35s ease,opacity .35s ease,color .2s;scroll-snap-align:center;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+.rcat.mid{opacity:1;transform:scale(1);color:var(--text)}
+.rcat .rim{display:grid;place-items:center;height:calc(var(--cw)*1.05);margin-bottom:.5rem;pointer-events:none}
+.rcat .rim img,.rcat .rim video,.rcat .rim .lot{display:block;width:100%;height:100%;object-fit:contain;animation:floaty 5s ease-in-out infinite;-webkit-user-drag:none}
 .rcat:nth-child(even) .rim img,.rcat:nth-child(even) .rim video{animation-delay:-2.5s}
 .rcat[aria-pressed="true"]{opacity:1;color:var(--text);border-bottom-color:var(--accent)}
 .rcat:hover{opacity:1}
+.rnav{position:absolute;top:42%;z-index:2;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--text);font-size:1.5rem;line-height:1;cursor:pointer;display:grid;place-items:center;transition:border-color .2s,color .2s}
+.rnav:hover{border-color:var(--accent);color:var(--accent)}
+.rnav.prev{left:.6rem}.rnav.next{right:.6rem}
+.rcar[hidden]{display:none}
+@media(max-width:600px){.rtabs{--cw:58vw;gap:.2rem}.rnav{display:none}.rcar{margin:.4rem -1rem 0}}
 @keyframes floaty{50%{transform:translateY(-10px) rotate(-1.5deg)}}
 .rpanel{margin-top:.4rem;scroll-margin-top:1rem}
 @keyframes swapin{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
@@ -263,6 +272,15 @@ select{appearance:auto}
 .steps p{margin:.2rem 0 0;color:var(--muted)}
 footer{border-top:1px solid var(--line);padding:2rem 0;color:var(--muted);font-size:.9rem}
 footer a{color:var(--text)}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.6rem 2rem}
+.fcol{display:flex;flex-direction:column;gap:.3rem}.fcol[hidden]{display:none}
+.fcol strong{color:var(--text);font-weight:600;margin-bottom:.2rem}
+.fmap{align-self:flex-start;margin-top:.3rem;color:var(--accent)!important;text-underline-offset:3px}
+.social{display:flex;gap:.7rem}
+.social a{width:44px;height:44px;border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text);transition:border-color .2s,color .2s}
+.social a:hover{border-color:var(--accent);color:var(--accent)}
+.social svg{width:20px;height:20px;fill:currentColor}
+.fcredit{margin-top:1.6rem;padding-top:1.1rem;border-top:1px solid var(--line);font-size:.85rem}
 </style>
 </head>
 <body>
@@ -270,7 +288,7 @@ footer a{color:var(--text)}
 <div class="wrap">
   <header class="nav">
     <a class="brand" href="#inicio" aria-label="Polideportivo Alejandro Carrasquel, inicio"><span class="logo"><img src="PAC%20LOGO.png" alt="Polideportivo Alejandro Carrasquel" width="300" height="55" onerror="this.parentNode.outerHTML='<b>Alejandro Carrasquel</b>'"></span></a>
-    <nav><a href="#espacios">Reservar</a><a href="#eventos">Eventos</a><a class="hide" href="#resultados">Resultados</a><a class="hide" id="navEnt" href="#entrenadores" hidden>Entrenadores</a><a class="hide" href="#cuentas">Cuentas</a><a class="hide" href="#reglas">Reglas</a></nav>
+    <nav><a href="#espacios">Reservar</a><a href="#eventos">Eventos</a><a class="hide" href="#resultados">Resultados</a><a class="hide" id="navEnt" href="#entrenadores" hidden>Entrenadores</a><a class="hide" href="#cuentas">Tablero</a><a class="hide" href="#reglas">Reglas</a></nav>
   </header>
 
   <main id="inicio">
@@ -393,7 +411,7 @@ footer a{color:var(--text)}
     <h2>Resultados</h2>
     <p class="muted">Los marcadores de las competencias del polideportivo, por categoría.</p>
     <p class="note" id="rsDemo" hidden>Vista de ejemplo: estos no son resultados reales. Se ocultan solos cuando publiques los primeros.</p>
-    <div class="rtabs" id="rtabs" role="group" aria-label="Categoría"></div>
+    <div class="rcar" id="rcar"><button type="button" class="rnav prev" id="rPrev" aria-label="Anterior">&#8249;</button><div class="rtabs" id="rtabs" role="group" aria-label="Categoría"></div><button type="button" class="rnav next" id="rNext" aria-label="Siguiente">&#8250;</button></div>
     <div class="rpanel" id="rpanel" hidden>
       <div class="rboard"><div class="tags" id="rrama" role="group" aria-label="Rama"></div><div class="tags" id="rdiv" role="group" aria-label="División o edad"></div><div id="rlist"></div></div>
     </div>
@@ -460,7 +478,7 @@ footer a{color:var(--text)}
   </section>
 
   <section id="cuentas">
-    <h2>Cuentas claras</h2>
+    <h2>Tablero de gestión</h2>
     <p class="muted">Lo que se recauda se invierte en el polideportivo, con autogestión de la comunidad. Cada mes publicamos aquí cuánto entró y en qué se usó.</p>
     <div class="empty" id="cuEmpty"><p>Publicaremos el primer resumen al cerrar el mes.</p></div>
     <div id="cuBody" hidden>
@@ -483,13 +501,35 @@ footer a{color:var(--text)}
     </ul>
   </section>
 </div>
-<footer><div class="wrap">Polideportivo Alejandro Carrasquel · Administrado por el Consejo Comunal Unidad de Desarrollo Alejandro Carrasquel · WhatsApp: <a href="https://wa.me/584242324870">0424 2324870</a></div></footer>
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div class="fcol">
+      <strong>Polideportivo Alejandro Carrasquel</strong>
+      <span>Administración UDAC · Unidad de Desarrollo Alejandro Carrasquel</span>
+      <span>RIF C299731455</span>
+      <span>WhatsApp: <a href="https://wa.me/584242324870">0424 2324870</a></span>
+    </div>
+    <div class="fcol" id="fUbic" hidden>
+      <strong>Dónde estamos</strong>
+      <span id="fDir"></span>
+      <a class="fmap" id="fMap" target="_blank" rel="noopener">Ver en Google Maps</a>
+    </div>
+    <div class="fcol" id="fRedes" hidden>
+      <strong>Síguenos</strong>
+      <div class="social" id="fSocial"></div>
+    </div>
+  </div>
+  <div class="fcredit">Diseño y desarrollo: Dileny Jiménez · <a href="https://wa.me/584242324870">0424 2324870</a></div>
+</div></footer>
 
 <script>
 (function(){
   /* ===== CONFIGURACIÓN: edita aquí ===== */
   var WHATSAPP="584242324870", TEL_TXT="0424 2324870";
   var SUBMIT_URL="https://script.google.com/macros/s/AKfycbwm7ntaH0tCFoLVbQI__iUSDHvB4pnwf_8Gu7vgdbD_e4dRTxkZlXIaVsAG_mx0PUqO/exec";   // URL de tu Apps Script (termina en /exec). Vacío = las reservas se envían por WhatsApp
+  var DIRECCION="Polideportivo Alejandro Carrasquel, UD-1, Caracas";    // dirección del polideportivo (ej. "Av. ..., Caricuao, Caracas"). Vacío = no se muestra "Dónde estamos"
+  var MAPS_URL="https://www.google.com/maps/search/?api=1&query=C2M5%2BMW2%20Caracas";     // (opcional) enlace exacto de Google Maps; si está vacío se arma con la dirección
+  var REDES={instagram:"",tiktok:"",facebook:""};   // enlaces a tus perfiles; solo se muestran los que llenes
   var BCV=0;           // tasa BCV del día (ej. 60.5). Si es 0 no se muestra el monto en Bs
   var OPEN_DAYS=[0,1,2,3,4,5,6];   // días abiertos: 0=domingo, 1=lunes ... 6=sábado
   var STEP=30;                     // los horarios se eligen cada 30 minutos
@@ -1142,6 +1182,25 @@ footer a{color:var(--text)}
       var im=document.createElement("img");im.src=url;im.alt="";box.appendChild(im);
     }
   }
+  function carMid(){
+    var tb=$("rtabs");if(!tb||!tb.children.length)return;
+    var c=tb.getBoundingClientRect(),mid=c.left+c.width/2,best=null,bd=1e9;
+    Array.prototype.forEach.call(tb.children,function(k){var r=k.getBoundingClientRect(),d=Math.abs(r.left+r.width/2-mid);if(d<bd){bd=d;best=k}});
+    Array.prototype.forEach.call(tb.children,function(k){k.classList.toggle("mid",k===best)});
+  }
+  (function carInit(){
+    var tb=$("rtabs"),tk=false;
+    tb.addEventListener("scroll",function(){if(tk)return;tk=true;requestAnimationFrame(function(){tk=false;carMid()})},{passive:true});
+    function step(d){var k=tb.children[0];if(!k)return;tb.scrollBy({left:d*(k.offsetWidth+6),behavior:"smooth"})}
+    $("rPrev").onclick=function(){step(-1)};$("rNext").onclick=function(){step(1)};
+    tb.addEventListener("keydown",function(e){if(e.key==="ArrowRight"){step(1)}else if(e.key==="ArrowLeft"){step(-1)}});
+    var x0=0,l0=0,down=false,moved=false;
+    tb.addEventListener("pointerdown",function(e){if(e.pointerType!=="mouse"||e.button!==0)return;down=true;moved=false;x0=e.clientX;l0=tb.scrollLeft});
+    window.addEventListener("pointermove",function(e){if(!down)return;var dx=e.clientX-x0;if(!moved&&Math.abs(dx)>6){moved=true;tb.classList.add("drag")}if(moved){tb.scrollLeft=l0-dx}});
+    window.addEventListener("pointerup",function(){if(!down)return;down=false;tb.classList.remove("drag")});
+    tb.addEventListener("click",function(e){if(moved){e.stopPropagation();e.preventDefault();moved=false}},true);
+    window.addEventListener("resize",carMid);
+  })();
   function renderResults(){
     var rows=rs.rows&&rs.rows.length?rs.rows:RESULTS;rs.demo=false;
     if(!rows.length&&DEMO_RESULTS){rows=demoRows();rs.demo=true}
@@ -1149,15 +1208,17 @@ footer a{color:var(--text)}
     rows.sort(function(x,y){return x.fecha<y.fecha?1:x.fecha>y.fecha?-1:0});
     $("rsDemo").hidden=!rs.demo;
     var cats=CATS.filter(function(c){return rows.some(function(r){return r.c===c})});
-    $("rsEmpty").hidden=cats.length>0;$("rtabs").hidden=!cats.length;
+    $("rsEmpty").hidden=cats.length>0;$("rtabs").hidden=!cats.length;$("rcar").hidden=!cats.length;
     if(!cats.length){$("rpanel").hidden=true;return}
     if(rs.cat&&cats.indexOf(rs.cat)<0){rs.cat=null}
-    var tb=$("rtabs");tb.innerHTML="";
+    var tb=$("rtabs"),keepL=tb.scrollLeft;tb.innerHTML="";
     cats.forEach(function(c){
       var b=el("button","rcat");b.type="button";b.setAttribute("aria-pressed",c===rs.cat);b.setAttribute("aria-label",c.n);
       var im=el("div","rim");mediaFor(im,ILLUS[c.k],"",c.c);b.appendChild(im);b.appendChild(el("span","",c.n));
       b.onclick=function(){var open=rs.cat!==c;rs.cat=open?c:null;rs.rama="";rs.div="";rs.shown=12;rs.anim=open;renderResults();if(open){var pn=$("rpanel");setTimeout(function(){pn.scrollIntoView({behavior:"smooth",block:"nearest"})},60)}};tb.appendChild(b);
     });
+    tb.scrollLeft=keepL;carMid();
+    if(rs.cat){var sel=cats.indexOf(rs.cat);if(sel>=0&&tb.children[sel]){var k=tb.children[sel];tb.scrollTo({left:k.offsetLeft-(tb.clientWidth-k.offsetWidth)/2,behavior:"smooth"})}}
     $("rpanel").hidden=!rs.cat;
     if(!rs.cat){return}
     var mine=rows.filter(function(r){return r.c===rs.cat});
@@ -1331,7 +1392,19 @@ footer a{color:var(--text)}
     draw();
   })();
 
-  [fillFrom,fillTo,loadBusy,loadResults,loadCuentas].forEach(function(fn){try{fn()}catch(e){if(window.console){console.error(e)}}});
+  function footerInfo(){
+    if(DIRECCION){$("fUbic").hidden=false;$("fDir").textContent=DIRECCION;
+      $("fMap").href=MAPS_URL||("https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(DIRECCION))}
+    var IC={instagram:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.3-3.2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4Z"/></svg>',
+      tiktok:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 5.8a4.3 4.3 0 0 1-1-2.8h-3v12.2a2.5 2.5 0 1 1-2.5-2.5c.3 0 .5 0 .8.1V9.7a5.6 5.6 0 1 0 4.8 5.5V9.4a7.3 7.3 0 0 0 4.2 1.3V7.7a4.3 4.3 0 0 1-3.3-1.9Z"/></svg>',
+      facebook:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8.2h2.8l.5-3.3h-3.3V8.4c0-.9.4-1.7 1.8-1.7h1.6V3.8c-.3 0-1.3-.2-2.4-.2-2.5 0-4.1 1.5-4.1 4.2v2.7H7.7v3.3h2.7V22h3.1Z"/></svg>'};
+    var NM={instagram:"Instagram",tiktok:"TikTok",facebook:"Facebook"},any=false;
+    ["instagram","tiktok","facebook"].forEach(function(k){
+      if(!REDES[k])return;any=true;var a=document.createElement("a");a.href=REDES[k];a.target="_blank";a.rel="noopener";
+      a.setAttribute("aria-label",NM[k]);a.innerHTML=IC[k];$("fSocial").appendChild(a)});
+    if(any)$("fRedes").hidden=false;
+  }
+  [footerInfo,fillFrom,fillTo,loadBusy,loadResults,loadCuentas].forEach(function(fn){try{fn()}catch(e){if(window.console){console.error(e)}}});
 })();
 </script>
 </body>
